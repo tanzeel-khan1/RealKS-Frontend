@@ -1,0 +1,89 @@
+{
+  "common": {
+    "language": "اللغة",
+    "english": "الإنجليزية",
+    "arabic": "العربية"
+  },
+  "navbar": {
+    "dashboard": "لوحة التحكم",
+    "welcome": "مرحبًا بعودتك",
+    "searchTabs": "بحث في التبويبات...",
+    "searchAnything": "بحث عن أي شيء...",
+    "ctrlK": "Ctrl K"
+  },
+  "topbar": {
+    "searchAnything": "بحث عن أي شيء...",
+    "myActivity": "نشاطي",
+    "markAllRead": "تحديد الكل كمقروء",
+    "noActivity": "لا يوجد نشاط بعد"
+  },
+  "tabs": {
+    "overview": "نظرة عامة",
+    "financials": "المالية",
+    "notes": "ملاحظاتي",
+    "documents": "المستندات",
+    "chat": "المحادثات",
+    "profile": "الملف الشخصي",
+    "companies": "الشركات",
+    "goals": "الأهداف",
+    "companies_plural": "شركة"
+  },
+  "sidebar": {
+    "workspace": "مساحة العمل",
+    "selectCompany": "اختر شركة",
+    "newCompany": "شركة جديدة",
+    "manageCompanies": "إدارة الشركات",
+    "menu": "القائمة",
+    "support": "الدعم",
+    "logOut": "تسجيل الخروج"
+  },
+  "company": {
+    "dashboard": "لوحة التحكم",
+    "clients": "العملاء",
+    "properties": "العقارات",
+    "expenses": "المصروفات",
+    "invoices": "الفواتير",
+    "documents": "المستندات",
+    "ideas": "الأفكار والتذاكر",
+    "notepad": "المذكرات",
+    "employees": "الموظفون",
+    "businessPlan": "خطة العمل",
+    "contracts": "العقود"
+  },
+  "dashboard": {
+    "executiveOverview": "نظرة عامة تنفيذية",
+    "clearView": "عرض واضح لأدائك المالي.",
+    "downloadReport": "تنزيل التقرير",
+    "totalInvoiced": "إجمالي الفواتير",
+    "paid": "مدفوع",
+    "unpaid": "غير مدفوع",
+    "overdue": "متأخر",
+    "totalExpenses": "إجمالي المصروفات",
+    "netIncome": "صافي الدخل",
+    "recentInvoices": "الفواتير الأخيرة",
+    "recentExpenses": "المصروفات الأخيرة",
+    "topClients": "أبرز العملاء",
+    "revenueTrend": "اتجاه الإيرادات",
+    "seeAll": "عرض الكل"
+  },
+  "auth": {
+    "memberAccess": "وصول الأعضاء",
+    "joinRanvola": "انضم إلى Ranvola",
+    "welcomeBack": "مرحبًا بعودتك",
+    "createAccount": "إنشاء حسابك",
+    "signInToContinue": "سجّل الدخول للمتابعة إلى لوحة التحكم.",
+    "fillDetails": "املأ التفاصيل أدناه للبدء.",
+    "signIn": "تسجيل الدخول",
+    "signUp": "إنشاء حساب",
+    "fullName": "الاسم الكامل",
+    "emailAddress": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "hide": "إخفاء",
+    "show": "إظهار",
+    "pleaseWait": "يرجى الانتظار...",
+    "createAccountBtn": "إنشاء حساب",
+    "dontHaveAccount": "ليس لديك حساب؟",
+    "alreadyHaveAccount": "لديك حساب بالفعل؟",
+    "createOne": "أنشئ واحدًا"
+  }
+}

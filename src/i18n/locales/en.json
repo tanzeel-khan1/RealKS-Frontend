@@ -1,0 +1,89 @@
+{
+  "common": {
+    "language": "Language",
+    "english": "English",
+    "arabic": "Arabic"
+  },
+  "navbar": {
+    "dashboard": "Dashboard",
+    "welcome": "Welcome back",
+    "searchTabs": "Search tabs...",
+    "searchAnything": "Search anything...",
+    "ctrlK": "Ctrl K"
+  },
+  "topbar": {
+    "searchAnything": "Search anything...",
+    "myActivity": "My Activity",
+    "markAllRead": "Mark all as read",
+    "noActivity": "No activity yet"
+  },
+  "tabs": {
+    "overview": "Overview",
+    "financials": "Financials",
+    "notes": "My Notes",
+    "documents": "Documents",
+    "chat": "Chats",
+    "profile": "Profile",
+    "companies": "Companies",
+    "goals": "Goals",
+    "companies_plural": "companies"
+  },
+  "sidebar": {
+    "workspace": "Workspace",
+    "selectCompany": "Select Company",
+    "newCompany": "New Company",
+    "manageCompanies": "Manage Companies",
+    "menu": "Menu",
+    "support": "Support",
+    "logOut": "Log Out"
+  },
+  "company": {
+    "dashboard": "Dashboard",
+    "clients": "Clients",
+    "properties": "Properties",
+    "expenses": "Expenses",
+    "invoices": "Invoices",
+    "documents": "Documents",
+    "ideas": "Ideas & Tickets",
+    "notepad": "Notepad",
+    "employees": "Employees",
+    "businessPlan": "Business Plan",
+    "contracts": "Contracts"
+  },
+  "dashboard": {
+    "executiveOverview": "Executive overview",
+    "clearView": "A clear view of your financial performance.",
+    "downloadReport": "Download Report",
+    "totalInvoiced": "Total Invoiced",
+    "paid": "Paid",
+    "unpaid": "Unpaid",
+    "overdue": "Overdue",
+    "totalExpenses": "Total Expenses",
+    "netIncome": "Net Income",
+    "recentInvoices": "Recent Invoices",
+    "recentExpenses": "Recent Expenses",
+    "topClients": "Top Clients",
+    "revenueTrend": "Revenue Trend",
+    "seeAll": "See all"
+  },
+  "auth": {
+    "memberAccess": "Member access",
+    "joinRanvola": "Join Ranvola",
+    "welcomeBack": "Welcome back",
+    "createAccount": "Create your account",
+    "signInToContinue": "Sign in to continue to your dashboard.",
+    "fillDetails": "Fill the details below to get started.",
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "fullName": "Full name",
+    "emailAddress": "Email address",
+    "password": "Password",
+    "hide": "Hide",
+    "show": "Show",
+    "pleaseWait": "Please wait...",
+    "createAccountBtn": "Create account",
+    "dontHaveAccount": "Don't have an account?",
+    "alreadyHaveAccount": "Already have an account?",
+    "createOne": "Create one"
+  }
+}
