@@ -12,6 +12,7 @@ const invoiceSchema = new mongoose.Schema({
   invoice_number: { type: String },
   title: { type: String, required: true },
   amount: { type: Number, required: true },
+  currency: { type: String, enum: ['USD', 'EUR', 'GBP', 'CAD', 'AUD', 'INR', 'PKR', 'SAR'], default: 'USD' },
   tax_amount: { type: Number, default: 0 },
   total_amount: { type: Number },
   recipient_name: { type: String },

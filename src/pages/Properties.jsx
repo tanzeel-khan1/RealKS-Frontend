@@ -12,6 +12,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { formatCurrency } from '@/lib/currency';
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 const PROPERTY_TYPES = ['House', 'Apartment', 'Villa', 'Plot', 'Commercial', 'Office', 'Other'];
@@ -35,6 +36,7 @@ const STATUS_STYLES = {
 export default function Properties() {
   const { activeCompany } = useOutletContext();
   const companyId = activeCompany?.id || activeCompany?._id;
+  const currency = activeCompany?.currency || 'USD';
   const queryClient = useQueryClient();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState(null);
@@ -197,7 +199,7 @@ export default function Properties() {
           { label: 'Total listings', value: stats.total, icon: Building2 },
           { label: 'Available now', value: stats.available, icon: Check },
           { label: 'Reserved', value: stats.reserved, icon: Sparkles },
-          { label: 'Portfolio value', value: stats.portfolio.toLocaleString(), icon: DollarSign },
+          { label: 'Portfolio value', value: formatCurrency(stats.portfolio, currency), icon: DollarSign },
         ].map(({ label, value, icon: Icon }) => (
           <div key={label} className="rounded-xl border border-border bg-card p-4 shadow-sm"><div className="mb-3 flex h-8 w-8 items-center justify-center rounded-lg bg-amber-100 text-amber-700"><Icon className="h-4 w-4" /></div><p className="text-xl font-semibold tracking-tight">{value}</p><p className="mt-1 text-xs text-muted-foreground">{label}</p></div>
         ))}
@@ -221,7 +223,7 @@ export default function Properties() {
                 <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/70 to-transparent" />
                 <Badge className={`absolute left-3 top-3 border-0 ${STATUS_STYLES[property.status || 'Available']}`}>{property.status || 'Available'}</Badge>
                 <Badge className="absolute right-3 top-3 border-0 bg-white/90 text-slate-900">{property.listing_type}</Badge>
-                <p className="absolute bottom-3 left-4 text-lg font-semibold text-white">{Number(property.price || 0).toLocaleString()}</p>
+                <p className="absolute bottom-3 left-4 text-lg font-semibold text-white">{formatCurrency(property.price || 0, currency)}</p>
               </div>
               <div className="space-y-3 p-4">
                 <div><h2 className="truncate font-semibold">{property.title}</h2><p className="mt-1 flex items-center gap-1 truncate text-sm text-muted-foreground"><MapPin className="h-3.5 w-3.5 shrink-0" />{property.address}</p></div>

@@ -169,7 +169,7 @@ export default function CreateCompany() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {["USD", "EUR", "GBP", "CAD", "AUD", "INR", "PKR"].map(
+                    {CURRENCIES.map(
                       (c) => (
                         <SelectItem key={c} value={c}>
                           {c}

@@ -17,6 +17,7 @@ import {
   Loader2,
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { formatCurrency, getCurrencySymbol } from '@/lib/currency';
 import TableSkeleton from '@/components/ui/TableSkeleton';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -65,6 +66,7 @@ const getInvestorId = (investor) => investor?.id || investor?._id;
 export default function Investors() {
   const { activeCompany, companies, currentUser } = useOutletContext();
   const companyId = activeCompany?.id || activeCompany?._id;
+  const currency = activeCompany?.currency || 'USD';
   const queryClient = useQueryClient();
 
   const isOwner =
@@ -387,7 +389,7 @@ const totalInvested = activeInvestors.reduce(
             <div>
               <p className="text-sm text-muted-foreground">Total Invested</p>
               <p className="text-xl font-bold">
-                ${totalInvested.toLocaleString()}
+                {formatCurrency(totalInvested, currency)}
               </p>
             </div>
           </div>
@@ -460,7 +462,7 @@ const totalInvested = activeInvestors.reduce(
                       </td>
 
                       <td className="px-5 py-3.5 text-sm">
-                        ${(inv.total_invested || 0).toLocaleString()}
+                        {formatCurrency(inv.total_invested || 0, currency)}
                       </td>
 
                       <td className="px-5 py-3.5 text-sm">
@@ -677,7 +679,7 @@ const totalInvested = activeInvestors.reduce(
             <Label>Total Invested</Label>
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
-                $
+                {getCurrencySymbol(currency).trim()}
               </span>
               <Input
                 type="number"

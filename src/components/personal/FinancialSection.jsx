@@ -5,6 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Input } from '@/components/ui/input';
 import { subMonths, subQuarters, subYears, isAfter, parseISO, startOfDay } from 'date-fns';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
+import { formatCurrency, formatCompactCurrency } from '@/lib/currency';
 
 const DATE_FILTERS = [
   { label: 'This Month', value: 'month' },
@@ -37,11 +38,13 @@ function StatCard({ icon: Icon, label, value, color, sub }) {
   );
 }
 
-export default function FinancialSection({ companies, allInvoices, allExpenses }) {
+export default function FinancialSection({ companies, allInvoices, allExpenses, activeCompany }) {
   const [dateFilter, setDateFilter] = useState('all');
   const [companyFilter, setCompanyFilter] = useState('all');
   const [customFrom, setCustomFrom] = useState('');
   const [customTo, setCustomTo] = useState('');
+  const selectedCompany = companies.find(c => c.id === companyFilter);
+  const currency = selectedCompany?.currency || activeCompany?.currency || 'USD';
 
   const filteredInvoices = useMemo(() => {
     let inv = allInvoices.filter(i => i.status === 'paid');
@@ -121,11 +124,11 @@ export default function FinancialSection({ companies, allInvoices, allExpenses }
 
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        <StatCard icon={DollarSign} label="Total Revenue" value={`$${totalRevenue.toLocaleString()}`}
+        <StatCard icon={DollarSign} label="Total Revenue" value={formatCurrency(totalRevenue, currency)}
           color={{ bg: 'bg-green-100', text: 'text-green-600' }} sub={`${filteredInvoices.length} paid invoices`} />
-        <StatCard icon={TrendingDown} label="Total Expenses" value={`$${totalExpenses.toLocaleString()}`}
+        <StatCard icon={TrendingDown} label="Total Expenses" value={formatCurrency(totalExpenses, currency)}
           color={{ bg: 'bg-red-100', text: 'text-red-500' }} sub={`${filteredExpenses.length} approved`} />
-        <StatCard icon={TrendingUp} label="Net Profit" value={`${netProfit < 0 ? '-' : ''}$${Math.abs(netProfit).toLocaleString()}`}
+        <StatCard icon={TrendingUp} label="Net Profit" value={formatCurrency(netProfit, currency)}
           color={{ bg: netProfit >= 0 ? 'bg-emerald-100' : 'bg-red-100', text: netProfit >= 0 ? 'text-emerald-600' : 'text-red-500' }} sub="Revenue − Expenses" />
         <StatCard icon={BarChart2} label="Profit Margin" value={`${profitMargin}%`}
           color={{ bg: 'bg-blue-100', text: 'text-blue-600' }} sub="Overall margin" />
@@ -142,8 +145,8 @@ export default function FinancialSection({ companies, allInvoices, allExpenses }
             <BarChart data={companyBreakdown} barCategoryGap="30%">
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
               <XAxis dataKey="name" tick={{ fontSize: 11 }} />
-              <YAxis tick={{ fontSize: 11 }} tickFormatter={v => `$${(v/1000).toFixed(0)}k`} />
-              <Tooltip formatter={v => `$${v.toLocaleString()}`} />
+              <YAxis tick={{ fontSize: 11 }} tickFormatter={v => formatCompactCurrency(v, currency)} />
+              <Tooltip formatter={v => formatCurrency(v, currency)} />
               <Bar dataKey="Revenue" fill="hsl(var(--chart-2))" radius={[4, 4, 0, 0]} />
               <Bar dataKey="Expenses" fill="hsl(var(--chart-5))" radius={[4, 4, 0, 0]} />
               <Bar dataKey="Profit" fill="hsl(var(--chart-1))" radius={[4, 4, 0, 0]} />
@@ -170,16 +173,16 @@ export default function FinancialSection({ companies, allInvoices, allExpenses }
                   <p className="text-[10px] text-muted-foreground">{c.industry || 'No industry'}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-xs text-green-600 font-medium">${row.Revenue.toLocaleString()}</p>
+                  <p className="text-xs text-green-600 font-medium">{formatCurrency(row.Revenue, c.currency)}</p>
                   <p className="text-[10px] text-muted-foreground">revenue</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-xs text-red-500 font-medium">${row.Expenses.toLocaleString()}</p>
+                  <p className="text-xs text-red-500 font-medium">{formatCurrency(row.Expenses, c.currency)}</p>
                   <p className="text-[10px] text-muted-foreground">expenses</p>
                 </div>
                 <div className="text-right">
                   <p className={`text-xs font-bold ${row.Profit >= 0 ? 'text-emerald-600' : 'text-red-500'}`}>
-                    {row.Profit < 0 ? '-' : ''}${Math.abs(row.Profit).toLocaleString()}
+                    {formatCurrency(row.Profit, c.currency)}
                   </p>
                   <p className="text-[10px] text-muted-foreground">profit</p>
                 </div>

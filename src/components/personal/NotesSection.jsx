@@ -53,7 +53,7 @@ export default function NotesSection({ currentUser }) {
 
   const { data: personalNotes = [] } = useQuery({
     queryKey: ['personal-notes', currentUser?.email],
-    queryFn: () => api.entities.Note.filter({ is_personal: true, created_by: currentUser.email }, '-updated_date'),
+    queryFn: () => api.entities.Note.filter({ is_personal: true, created_by: currentUser.email, user_email: currentUser.email }, '-updated_date'),
     enabled: !!currentUser?.email,
   });
 

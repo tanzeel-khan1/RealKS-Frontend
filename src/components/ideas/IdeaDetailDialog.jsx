@@ -22,7 +22,7 @@ export default function IdeaDetailDialog({ idea, currentUser, onClose, onStatusC
 
   const { data: comments = [] } = useQuery({
     queryKey: ['idea-comments', idea?.id],
-    queryFn: () => api.entities.IdeaComment.filter({ idea_id: idea.id }, 'created_date'),
+    queryFn: () => api.entities.IdeaComment.filter({ idea_id: idea.id, user_email: currentUser?.email }, 'created_date'),
     enabled: !!idea,
   });
 

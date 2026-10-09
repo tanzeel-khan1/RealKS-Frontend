@@ -15,8 +15,10 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { format } from 'date-fns';
 import { toast } from 'sonner';
+import { formatCurrency, getCurrencySymbol, CURRENCIES } from '@/lib/currency';
 
 const STATUSES = ['draft', 'sent', 'viewed', 'paid', 'overdue', 'archived'];
 
@@ -32,13 +34,14 @@ const statusStyles = {
 export default function Invoices() {
   const { activeCompany, companies } = useOutletContext();
   const companyId = activeCompany?.id;
+  const currency = activeCompany?.currency || 'USD';
 
   if (!companyId) return <NoCompanyBanner hasNoCompanies={!companies?.length} />;
   const queryClient = useQueryClient();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState(null);
   const [tab, setTab] = useState('all');
-  const [form, setForm] = useState({ title: '', amount: 0, tax_amount: 0, recipient_name: '', recipient_email: '', due_date: '', notes: '', status: 'draft' });
+  const [form, setForm] = useState({ title: '', amount: 0, tax_amount: 0, currency, recipient_name: '', recipient_email: '', due_date: '', notes: '', status: 'draft' });
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [emailDialog, setEmailDialog] = useState(false);
   const [emailTarget, setEmailTarget] = useState(null);
@@ -63,7 +66,7 @@ export default function Invoices() {
     }),
     onSuccess: (inv) => {
       queryClient.invalidateQueries({ queryKey: ['invoices'] });
-      logActivity(`Invoice created: ${inv.title}`, `Amount: $${inv.total_amount || inv.amount}`);
+      logActivity(`Invoice created: ${inv.title}`, `Amount: ${formatCurrency(inv.total_amount || inv.amount, inv.currency || currency)}`);
       toast.success(`Invoice "${inv.title}" created`);
       closeDialog();
     },
@@ -87,11 +90,11 @@ export default function Invoices() {
     },
   });
 
-  const closeDialog = () => { setDialogOpen(false); setEditing(null); setForm({ title: '', amount: 0, tax_amount: 0, recipient_name: '', recipient_email: '', due_date: '', notes: '', status: 'draft' }); };
+  const closeDialog = () => { setDialogOpen(false); setEditing(null); setForm({ title: '', amount: 0, tax_amount: 0, currency, recipient_name: '', recipient_email: '', due_date: '', notes: '', status: 'draft' }); };
 
   const openEdit = (inv) => {
     setEditing(inv);
-    setForm({ title: inv.title, amount: inv.amount, tax_amount: inv.tax_amount || 0, recipient_name: inv.recipient_name || '', recipient_email: inv.recipient_email || '', due_date: inv.due_date || '', notes: inv.notes || '', status: inv.status });
+    setForm({ title: inv.title, amount: inv.amount, tax_amount: inv.tax_amount || 0, currency: inv.currency || currency, recipient_name: inv.recipient_name || '', recipient_email: inv.recipient_email || '', due_date: inv.due_date || '', notes: inv.notes || '', status: inv.status });
     setDialogOpen(true);
   };
 
@@ -181,7 +184,7 @@ export default function Invoices() {
                     <p className="text-xs text-muted-foreground">{inv.invoice_number}</p>
                   </td>
                   <td className="px-5 py-3.5 text-sm">{inv.recipient_name || '—'}</td>
-                  <td className="px-5 py-3.5 text-sm font-semibold">${(inv.total_amount || inv.amount || 0).toLocaleString()}</td>
+                  <td className="px-5 py-3.5 text-sm font-semibold">{formatCurrency(inv.total_amount || inv.amount || 0, inv.currency || currency)}</td>
                   <td className="px-5 py-3.5 text-sm text-muted-foreground">{inv.due_date ? format(new Date(inv.due_date), 'MMM d, yyyy') : '—'}</td>
                   <td className="px-5 py-3.5">
                     <Badge className={`text-xs capitalize ${statusStyles[inv.status] || ''}`}>{inv.status}</Badge>
@@ -229,7 +232,7 @@ export default function Invoices() {
           </div>
           <div className="space-y-5 bg-muted/30 p-6 sm:p-7">
             <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-              <div className="flex items-start justify-between gap-4 border-b border-border pb-4"><div><p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Invoice preview</p><p className="mt-2 text-lg font-semibold">{emailTarget?.title}</p><p className="mt-1 text-xs text-muted-foreground">{emailTarget?.invoice_number || 'Invoice'}</p></div><div className="text-right"><p className="text-2xl font-bold tracking-tight">${Number(emailTarget?.total_amount || emailTarget?.amount || 0).toLocaleString()}</p><Badge className="mt-2 capitalize">{emailTarget?.status || 'draft'}</Badge></div></div>
+              <div className="flex items-start justify-between gap-4 border-b border-border pb-4"><div><p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Invoice preview</p><p className="mt-2 text-lg font-semibold">{emailTarget?.title}</p><p className="mt-1 text-xs text-muted-foreground">{emailTarget?.invoice_number || 'Invoice'}</p></div><div className="text-right"><p className="text-2xl font-bold tracking-tight">{formatCurrency(Number(emailTarget?.total_amount || emailTarget?.amount || 0), emailTarget?.currency || currency)}</p><Badge className="mt-2 capitalize">{emailTarget?.status || 'draft'}</Badge></div></div>
               <div className="grid grid-cols-2 gap-4 pt-4 text-sm"><div><p className="text-xs text-muted-foreground">Recipient</p><p className="mt-1 font-medium">{emailTarget?.recipient_name || 'Client'}</p></div><div className="text-right"><p className="text-xs text-muted-foreground">Due date</p><p className="mt-1 font-medium">{emailTarget?.due_date ? format(new Date(emailTarget.due_date), 'MMM d, yyyy') : 'Not set'}</p></div></div>
             </div>
             <div className="rounded-2xl border border-border bg-card p-5 shadow-sm"><div className="space-y-2"><Label htmlFor="invoice-email" className="text-xs font-semibold">Recipient email</Label><Input id="invoice-email" value={emailTo} onChange={e => setEmailTo(e.target.value)} placeholder="recipient@example.com" type="email" className="h-11 bg-background" /><p className="text-xs text-muted-foreground">The recipient will receive the invoice details and due date.</p></div></div>
@@ -247,9 +250,17 @@ export default function Invoices() {
               <div><Label>Recipient Name</Label><Input value={form.recipient_name} onChange={e => setForm({ ...form, recipient_name: e.target.value })} /></div>
               <div><Label>Recipient Email</Label><Input value={form.recipient_email} onChange={e => setForm({ ...form, recipient_email: e.target.value })} /></div>
             </div>
-            <div className="grid grid-cols-3 gap-4">
-              <div><Label>Amount ($)</Label><Input type="number" value={form.amount} onChange={e => setForm({ ...form, amount: Number(e.target.value) })} /></div>
-              <div><Label>Tax ($)</Label><Input type="number" value={form.tax_amount} onChange={e => setForm({ ...form, tax_amount: Number(e.target.value) })} /></div>
+            <div className="grid grid-cols-2 gap-4">
+              <div><Label>Amount ({getCurrencySymbol(form.currency || currency).trim()})</Label><Input type="number" value={form.amount} onChange={e => setForm({ ...form, amount: Number(e.target.value) })} /></div>
+              <div><Label>Tax ({getCurrencySymbol(form.currency || currency).trim()})</Label><Input type="number" value={form.tax_amount} onChange={e => setForm({ ...form, tax_amount: Number(e.target.value) })} /></div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div><Label>Currency</Label>
+                <Select value={form.currency} onValueChange={v => setForm({ ...form, currency: v })}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>{CURRENCIES.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectContent>
+                </Select>
+              </div>
               <div><Label>Due Date</Label><Input type="date" value={form.due_date} onChange={e => setForm({ ...form, due_date: e.target.value })} /></div>
             </div>
             <div><Label>Notes</Label><Textarea value={form.notes} onChange={e => setForm({ ...form, notes: e.target.value })} rows={2} /></div>

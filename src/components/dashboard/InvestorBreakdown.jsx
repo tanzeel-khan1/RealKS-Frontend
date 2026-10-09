@@ -10,7 +10,7 @@ export default function InvestorBreakdown({ companyId }) {
     queryKey: ['investors', companyId],
     queryFn: () => companyId
       ? api.entities.Investor.filter({ company_id: companyId })
-      : api.entities.Investor.list(),
+      : [],
     initialData: [],
   });
 
