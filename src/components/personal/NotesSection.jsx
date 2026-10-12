@@ -122,7 +122,7 @@ export default function NotesSection({ currentUser }) {
 
         <button
           onClick={createNew}
-          className="inline-flex items-center gap-2 rounded-2xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-800 transition-colors"
+          className="inline-flex items-center gap-2 rounded-2xl bg-[#06180f] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#0b2417] transition-colors"
         >
           <Plus className="w-4 h-4" /> New note
         </button>
@@ -147,7 +147,7 @@ export default function NotesSection({ currentUser }) {
               <p className="mt-2 text-sm text-slate-500">Start a new note to capture your ideas and tasks.</p>
               <button
                 onClick={createNew}
-                className="mt-5 inline-flex items-center justify-center rounded-2xl bg-slate-900 px-5 py-2 text-sm font-semibold text-white hover:bg-slate-800 transition-colors"
+                className="mt-5 inline-flex items-center justify-center rounded-2xl bg-[#06180f] px-5 py-2 text-sm font-semibold text-white hover:bg-[#0b2417] transition-colors"
               >
                 + New note
               </button>
@@ -196,7 +196,7 @@ export default function NotesSection({ currentUser }) {
                 {saving && <span className="text-xs text-slate-500">Saving...</span>}
                 <button
                   onClick={handleBlurSave}
-                  className="rounded-2xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 transition-colors"
+                  className="rounded-2xl bg-[#06180f] px-4 py-2 text-sm font-semibold text-white hover:bg-[#0b2417] transition-colors"
                 >
                   Save
                 </button>
