@@ -77,8 +77,8 @@ export default function AppLayout() {
 
   return (
     <div className="min-h-screen bg-background relative">
-      <div className="pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(ellipse_at_top_right,rgba(231,182,60,0.06),transparent_45%)]" />
-      <div className="pointer-events-none fixed inset-0 z-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0),rgba(0,0,0,0.015))]" />
+      <div className="pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(ellipse_at_top_right,rgba(16,185,129,0.12),transparent_50%)]" />
+      <div className="pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(5,150,105,0.08),transparent_55%)]" />
       {/* Mobile backdrop */}
       <AnimatePresence>
         {mobileOpen && (
