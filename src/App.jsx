@@ -90,11 +90,9 @@ const AuthenticatedApp = () => {
   );
 };
 
-if (localStorage.getItem('theme') === 'dark') {
-  document.documentElement.classList.add('dark');
-} else {
-  document.documentElement.classList.remove('dark');
-}
+const savedTheme = localStorage.getItem('theme');
+const prefersDark = savedTheme ? savedTheme === 'dark' : true;
+document.documentElement.classList.toggle('dark', prefersDark);
 
 function App() {
   useEffect(() => {

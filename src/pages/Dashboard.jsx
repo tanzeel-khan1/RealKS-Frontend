@@ -284,7 +284,7 @@ export default function Dashboard() {
     <div className="space-y-6 pb-8">
       {/* Header */}
       <div className="card-surface relative overflow-hidden px-6 py-5 sm:px-7 sm:py-6">
-        <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#e7b63c]/[0.08] blur-2xl" />
+        <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#10b981]/[0.08] blur-2xl" />
         <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="eyebrow mb-2">t('dashboard.executiveOverview')</p>
@@ -314,9 +314,9 @@ export default function Dashboard() {
       {/* Welcome + Metric Cards */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         {/* Welcome card */}
-        <div className="relative overflow-hidden rounded-2xl bg-[#0c0e16] p-5 text-white shadow-[0_20px_60px_-20px_rgba(12,14,22,0.7)]">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(231,182,60,0.15),transparent_55%)]" />
-          <div className="pointer-events-none absolute -bottom-14 -right-10 h-40 w-40 rounded-full border-[20px] border-[#e7b63c]/10" />
+        <div className="relative overflow-hidden rounded-2xl bg-[#04140d] p-5 text-white shadow-[0_20px_60px_-20px_rgba(12,14,22,0.7)]">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(34,197,94,0.15),transparent_55%)]" />
+          <div className="pointer-events-none absolute -bottom-14 -right-10 h-40 w-40 rounded-full border-[20px] border-[#10b981]/10" />
           <div className="relative z-10">
             <p className="text-xs text-white/50">Welcome back</p>
             <h2 className="mt-1 truncate font-display text-xl">
@@ -330,7 +330,7 @@ export default function Dashboard() {
                 {formatCurrency(totalExpenses, currency)}
               </p>
               <p className="mt-1 flex items-center gap-1 text-xs text-white/50">
-                <ArrowUpRight className="h-3 w-3 text-[#e7b63c]" /> +12% from
+                <ArrowUpRight className="h-3 w-3 text-[#34d399]" /> +12% from
                 last month
               </p>
             </div>
@@ -369,7 +369,7 @@ export default function Dashboard() {
             </div>
             <p className="text-3xl font-semibold tracking-tight">{m.value}</p>
             <div className="h-1.5 w-full rounded-full bg-secondary overflow-hidden">
-              <div className="h-full w-3/4 rounded-full bg-gradient-to-r from-[#e7b63c] to-[#c89b2a] opacity-70" />
+              <div className="h-full w-3/4 rounded-full bg-gradient-to-r from-[#34d399] to-[#10b981] opacity-70" />
             </div>
           </div>
         ))}
@@ -422,7 +422,7 @@ export default function Dashboard() {
               <Bar
                 dataKey="revenue"
                 name="Revenue"
-                fill="#c89b2a"
+                fill="#10b981"
                 radius={[4, 4, 0, 0]}
               />
               <Bar
@@ -467,7 +467,7 @@ export default function Dashboard() {
                 type="monotone"
                 dataKey="revenue"
                 name="Revenue"
-                stroke="#c89b2a"
+                stroke="#10b981"
                 strokeWidth={2.5}
                 dot={false}
                 activeDot={{ r: 4 }}
