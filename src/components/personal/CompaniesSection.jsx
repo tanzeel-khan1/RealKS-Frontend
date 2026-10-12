@@ -181,7 +181,7 @@ export default function CompaniesSection({
                   </button>
                   <button
                     onClick={() => setDeleteId(c.id)}
-                    className="rounded-2xl bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800"
+                    className="rounded-2xl bg-[#06180f] px-4 py-2 text-sm font-medium text-white hover:bg-[#0b2417]"
                   >
                     Delete
                   </button>

@@ -698,7 +698,7 @@ function RoadmapView({
       <RoadmapBackground />
 
       <div className="relative z-10 flex items-center justify-between mb-8">
-        <div className="w-9 h-9 rounded-full bg-[#ffc400] text-[#3b064c] flex items-center justify-center shadow-lg">
+        <div className="w-9 h-9 rounded-full bg-[#22c55e] text-[#3b064c] flex items-center justify-center shadow-lg">
           <Crown className="w-5 h-5 fill-current" />
         </div>
 
@@ -778,7 +778,7 @@ function RoadmapView({
         <div className="flex justify-center pt-8">
           <button
             onClick={onCreate}
-            className="flex items-center gap-2 rounded-full bg-[#ffc400] px-6 py-3 text-sm font-black text-[#3b064c] shadow-lg hover:scale-105 transition-transform"
+            className="flex items-center gap-2 rounded-full bg-[#22c55e] px-6 py-3 text-sm font-black text-[#3b064c] shadow-lg hover:scale-105 transition-transform"
           >
             <Plus className="w-4 h-4" />
             Add Next Step
@@ -786,7 +786,7 @@ function RoadmapView({
         </div>
       </div>
 
-      <div className="absolute bottom-4 right-5 text-[#ffc400] rotate-12 opacity-90">
+      <div className="absolute bottom-4 right-5 text-[#22c55e] rotate-12 opacity-90">
         <Rocket className="w-16 h-16 fill-current" />
       </div>
     </div>
@@ -804,11 +804,11 @@ function RoadmapBackground() {
         <div className="absolute left-20 bottom-24 w-24 h-24 border border-white/10 rotate-45" />
       </div>
 
-      <div className="absolute left-1/2 top-2 -translate-x-1/2 text-[#ffc400] opacity-80 text-3xl leading-none">
+      <div className="absolute left-1/2 top-2 -translate-x-1/2 text-[#22c55e] opacity-80 text-3xl leading-none">
         
       </div>
 
-      <div className="absolute left-1/2 bottom-16 -translate-x-1/2 text-[#ffc400] opacity-80 text-3xl leading-none">
+      <div className="absolute left-1/2 bottom-16 -translate-x-1/2 text-[#22c55e] opacity-80 text-3xl leading-none">
         
       </div>
     </>
@@ -835,7 +835,7 @@ function RoadPath() {
             C155 775 95 775 95 900
           "
           fill="none"
-          stroke="#f6a400"
+          stroke="#16a34a"
           strokeWidth="32"
           strokeLinecap="round"
         />
@@ -859,7 +859,7 @@ function RoadPath() {
         />
       </svg>
 
-      <div className="md:hidden absolute left-[34px] top-3 bottom-24 w-8 rounded-full border-l-[12px] border-[#f6a400]">
+      <div className="md:hidden absolute left-[34px] top-3 bottom-24 w-8 rounded-full border-l-[12px] border-[#16a34a]">
         <div className="absolute left-[-8px] top-0 bottom-0 border-l-2 border-dashed border-[#3b064c]" />
       </div>
     </>
@@ -874,7 +874,7 @@ function StepNode({ step, onClick }) {
     <button
       onClick={onClick}
       title="Click to cycle status"
-      className="w-12 h-12 rounded-full bg-[#1b1020] border-[5px] border-[#f6a400] text-white flex items-center justify-center text-sm font-black shadow-xl hover:scale-110 transition-transform"
+      className="w-12 h-12 rounded-full bg-[#1b1020] border-[5px] border-[#16a34a] text-white flex items-center justify-center text-sm font-black shadow-xl hover:scale-110 transition-transform"
     >
       {isCompleted ? (
         <Check className="w-5 h-5" />
@@ -900,15 +900,15 @@ function StepCard({
     <div
       className={`
         group relative w-full max-w-[285px] rounded-xl
-        bg-gradient-to-br from-[#ffd21a] via-[#ffc400] to-[#f6a400]
-        px-4 py-3 text-[#2b1600] shadow-[0_12px_30px_rgba(0,0,0,0.22)]
-        border border-yellow-300/70
+        bg-gradient-to-br from-[#4ade80] via-[#22c55e] to-[#16a34a]
+        px-4 py-3 text-[#052e16] shadow-[0_12px_30px_rgba(0,0,0,0.22)]
+        border border-green-300/70
         ${align === 'left' ? 'md:text-left' : 'md:text-left'}
       `}
     >
       <div
         className={`
-          hidden md:block absolute top-1/2 -translate-y-1/2 w-5 h-5 bg-[#f6a400] rotate-45
+          hidden md:block absolute top-1/2 -translate-y-1/2 w-5 h-5 bg-[#16a34a] rotate-45
           ${align === 'left' ? '-right-2' : '-left-2'}
         `}
       />
@@ -934,7 +934,7 @@ function StepCard({
         </p>
 
         {step.description && (
-          <p className="text-[11px] mt-1.5 leading-relaxed text-[#5a3700] line-clamp-3">
+          <p className="text-[11px] mt-1.5 leading-relaxed text-[#166534] line-clamp-3">
             {step.description}
           </p>
         )}
