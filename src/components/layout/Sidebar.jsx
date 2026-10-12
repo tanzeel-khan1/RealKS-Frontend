@@ -70,17 +70,17 @@ export default function Sidebar({
         )}
       >
         {location.pathname === item.path && (
-          <span className="absolute left-0 top-1/2 -translate-y-1/2 h-4 w-[3px] rounded-full bg-[#c89b2a]" />
+          <span className="absolute left-0 top-1/2 -translate-y-1/2 h-4 w-[3px] rounded-full bg-primary" />
         )}
         <item.icon
           className={cn(
             "w-4 h-4 flex-shrink-0",
-            location.pathname === item.path && "text-[#c89b2a]"
+            location.pathname === item.path && "text-primary"
           )}
         />
         {!isCollapsed && <span>{item.label}</span>}
         {!isCollapsed && location.pathname === item.path && (
-          <span className="ml-auto h-1.5 w-1.5 rounded-full bg-[#c89b2a] opacity-80" />
+          <span className="ml-auto h-1.5 w-1.5 rounded-full bg-primary opacity-80" />
         )}
       </div>
     </Link>
@@ -91,12 +91,12 @@ export default function Sidebar({
       style={{ width: isCollapsed ? 72 : 240 }}
       className="relative h-screen flex flex-col fixed left-0 top-0 z-40 transition-all duration-200 border-r border-sidebar-border bg-sidebar text-sidebar-foreground"
     >
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-sidebar-foreground/[0.03] via-transparent to-[#e7b63c]/[0.05]" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-sidebar-foreground/[0.03] via-transparent to-primary/[0.06]" />
 
       {/* Logo */}
       <div className="relative h-14 flex items-center px-4 border-b border-sidebar-border flex-shrink-0">
         <div className="flex items-center gap-2.5 overflow-hidden w-full">
-          <div className="relative h-8 w-8 rounded-xl bg-gradient-to-br from-[#f0c74f] via-[#d9ac34] to-[#9a7718] shadow-[0_4px_16px_-4px_rgba(199,154,39,0.6)] flex items-center justify-center flex-shrink-0">
+          <div className="relative h-8 w-8 rounded-xl bg-gradient-to-br from-[#34d399] via-[#10b981] to-[#047857] shadow-[0_6px_20px_-6px_rgba(16,185,129,0.75)] flex items-center justify-center flex-shrink-0">
             <span className="text-black font-black text-[13px] leading-none tracking-tight">R</span>
             <span className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full border-2 border-sidebar bg-foreground/80" />
           </div>
@@ -105,7 +105,7 @@ export default function Sidebar({
               <span className="font-semibold text-sm tracking-tight whitespace-nowrap">
                 Ranvola
               </span>
-              <span className="text-[9px] uppercase tracking-[0.28em] text-[#b3891f] mt-1 whitespace-nowrap">
+              <span className="text-[9px] uppercase tracking-[0.28em] text-primary/80 mt-1 whitespace-nowrap">
                 Realtor Suite
               </span>
             </div>
@@ -121,9 +121,9 @@ export default function Sidebar({
           </p>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="w-full flex items-center gap-2 p-2 rounded-xl border border-sidebar-border bg-sidebar-accent/60 hover:bg-sidebar-accent hover:border-[#c89b2a]/40 transition-all text-left">
+              <button className="w-full flex items-center gap-2 p-2 rounded-xl border border-sidebar-border bg-sidebar-accent/60 hover:bg-sidebar-accent hover:border-primary/40 transition-all text-left">
                 <div className="w-7 h-7 rounded-lg bg-sidebar-accent border border-sidebar-border flex items-center justify-center flex-shrink-0">
-                  <Building2 className="w-3.5 h-3.5 text-[#b3891f]" />
+                  <Building2 className="w-3.5 h-3.5 text-primary" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-xs font-medium truncate leading-tight">
@@ -207,7 +207,7 @@ export default function Sidebar({
         ) : (
           <>
             <div className="flex items-center gap-2.5 rounded-xl border border-sidebar-border bg-sidebar-accent/50 p-2">
-              <div className="h-8 w-8 rounded-full bg-gradient-to-br from-[#3a3f55] to-[#1c1e2c] dark:from-[#3a3f55] dark:to-[#1c1e2c] border border-sidebar-border flex items-center justify-center flex-shrink-0">
+              <div className="h-8 w-8 rounded-full bg-gradient-to-br from-[#107a5b] to-[#064e3b] dark:from-[#3a3f55] dark:to-[#1c1e2c] border border-sidebar-border flex items-center justify-center flex-shrink-0">
                 <span className="text-xs font-semibold text-white">
                   {currentUser?.full_name?.[0] ||
                     currentUser?.email?.[0]?.toUpperCase() ||
@@ -224,7 +224,7 @@ export default function Sidebar({
               </div>
               <button
                 onClick={() => navigate("/personal")}
-                className="p-1.5 rounded-md hover:bg-sidebar-accent transition-colors text-sidebar-foreground/40 hover:text-[#b3891f]"
+                className="p-1.5 rounded-md hover:bg-sidebar-accent transition-colors text-sidebar-foreground/40 hover:text-primary"
                 title="Personal Home"
               >
                 <Home className="w-3.5 h-3.5" />

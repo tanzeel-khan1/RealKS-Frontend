@@ -25,13 +25,16 @@ import {
   Legend,
 } from "recharts";
 import jsPDF from "jspdf";
+import { formatCurrency } from "@/lib/currency";
 
 export default function OverviewSection({
   currentUser,
   companies,
   allInvoices,
   allExpenses,
+  activeCompany,
 }) {
+  const currency = activeCompany?.currency || "USD";
   // ✅ TOTAL (no filters)
   const totalRevenue = allInvoices
     .filter((i) => i.status === "paid")
@@ -99,19 +102,19 @@ export default function OverviewSection({
     doc.text("Financial Report", 20, 20);
 
     const rows = [
-      ["Total Revenue", `$${totalRevenue.toLocaleString()}`],
+      ["Total Revenue", formatCurrency(totalRevenue, currency)],
       [
         "Total Expenses",
-        `$${totalExpensesAmt.toLocaleString()}`,
+        formatCurrency(totalExpensesAmt, currency),
       ],
       [
         "Net Profit",
-        `$${netProfit.toLocaleString()}`,
+        formatCurrency(netProfit, currency),
       ],
       ["Profit Margin", `${profitMargin}%`],
       [
         "Pending Revenue",
-        `$${pendingRevenue.toLocaleString()}`,
+        formatCurrency(pendingRevenue, currency),
       ],
     ];
 
@@ -146,17 +149,17 @@ export default function OverviewSection({
         <StatCard
           icon={<DollarSign />}
           label="Revenue"
-          value={`$${totalRevenue.toLocaleString()}`}
+          value={formatCurrency(totalRevenue, currency)}
         />
         <StatCard
           icon={<TrendingDown />}
           label="Expenses"
-          value={`$${totalExpensesAmt.toLocaleString()}`}
+          value={formatCurrency(totalExpensesAmt, currency)}
         />
         <StatCard
           icon={<TrendingUp />}
           label="Profit"
-          value={`$${netProfit.toLocaleString()}`}
+          value={formatCurrency(netProfit, currency)}
         />
         <StatCard
           icon={<BarChart2 />}
@@ -222,7 +225,7 @@ export default function OverviewSection({
             >
               <span>{c.name}</span>
               <span>
-                ${ (rev - exp).toLocaleString() }
+                {formatCurrency(rev - exp, c.currency)}
               </span>
             </div>
           );

@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { toast } from 'sonner';
+import { formatCurrency } from '@/lib/currency';
 
 const STATUS_COLORS = {
   active: 'bg-green-100 text-green-700',
@@ -24,7 +25,7 @@ const EMPTY_FORM = {
 
 const ROWS_OPTIONS = [10, 25, 50, 100];
 
-export default function EmployeesTab({ companyId }) {
+export default function EmployeesTab({ companyId, currency = 'USD' }) {
   const queryClient = useQueryClient();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editEmp, setEditEmp] = useState(null);
@@ -197,7 +198,7 @@ export default function EmployeesTab({ companyId }) {
                   <TableCell className="text-sm text-muted-foreground">{emp.email || '—'}</TableCell>
                   <TableCell className="text-sm">{emp.hire_date || '—'}</TableCell>
                   <TableCell className="text-sm">
-                    {emp.salary ? `$${Number(emp.salary).toLocaleString()}` : '—'}
+                    {emp.salary ? formatCurrency(emp.salary, currency) : '—'}
                   </TableCell>
                   <TableCell>
                     <Badge className={`text-[10px] px-2 py-0.5 capitalize ${STATUS_COLORS[emp.status] || STATUS_COLORS.active}`}>

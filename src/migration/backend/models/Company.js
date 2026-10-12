@@ -5,7 +5,7 @@ const companySchema = new mongoose.Schema({
   logo_url: { type: String },
   industry: { type: String },
   country: { type: String },
-  currency: { type: String, enum: ['USD', 'EUR', 'GBP', 'CAD', 'AUD', 'INR', 'PKR'], default: 'USD' },
+  currency: { type: String, enum: ['USD', 'EUR', 'GBP', 'CAD', 'AUD', 'INR', 'PKR', 'SAR'], default: 'USD' },
   fiscal_year_start: { type: String },
   description: { type: String },
   setup_progress: { type: Number, default: 0 },

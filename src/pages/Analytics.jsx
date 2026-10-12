@@ -5,40 +5,46 @@ import { api } from '@/api/apiClient';
 import { motion } from 'framer-motion';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 import { DollarSign, TrendingUp, Percent, ArrowUpRight } from 'lucide-react';
+import { formatCurrency, formatCompactCurrency } from '@/lib/currency';
 
 const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
-const CustomTooltip = ({ active, payload, label }) => {
+const CustomTooltip = ({ active, payload, label, currency }) => {
   if (!active || !payload) return null;
   return (
     <div className="bg-card border border-border rounded-lg p-3 shadow-xl">
       <p className="text-xs font-semibold mb-1">{label}</p>
       {payload.map((entry, i) => (
-        <p key={i} className="text-xs" style={{ color: entry.color }}>{entry.name}: ${entry.value.toLocaleString()}</p>
+        <p key={i} className="text-xs" style={{ color: entry.color }}>{entry.name}: {formatCurrency(entry.value, currency)}</p>
       ))}
     </div>
   );
 };
 
 export default function Analytics() {
-  const { activeCompany } = useOutletContext();
+  const { activeCompany, currentUser } = useOutletContext();
   const companyId = activeCompany?.id;
+  const currency = activeCompany?.currency || 'USD';
+  const hasScope = !!companyId || !!currentUser?.email;
 
   const { data: investors = [] } = useQuery({
-    queryKey: ['investors-analytics', companyId],
-    queryFn: () => companyId ? api.entities.Investor.filter({ company_id: companyId }) : api.entities.Investor.list(),
+    queryKey: ['investors-analytics', companyId, currentUser?.email],
+    queryFn: () => companyId ? api.entities.Investor.filter({ company_id: companyId }) : api.entities.Investor.filter({ user_email: currentUser.email }),
+    enabled: hasScope,
     initialData: [],
   });
 
   const { data: invoices = [] } = useQuery({
-    queryKey: ['invoices-analytics', companyId],
-    queryFn: () => companyId ? api.entities.Invoice.filter({ company_id: companyId }) : api.entities.Invoice.list(),
+    queryKey: ['invoices-analytics', companyId, currentUser?.email],
+    queryFn: () => companyId ? api.entities.Invoice.filter({ company_id: companyId }) : api.entities.Invoice.filter({ user_email: currentUser.email }),
+    enabled: hasScope,
     initialData: [],
   });
 
   const { data: expenses = [] } = useQuery({
-    queryKey: ['expenses-analytics', companyId],
-    queryFn: () => companyId ? api.entities.Expense.filter({ company_id: companyId }) : api.entities.Expense.list(),
+    queryKey: ['expenses-analytics', companyId, currentUser?.email],
+    queryFn: () => companyId ? api.entities.Expense.filter({ company_id: companyId }) : api.entities.Expense.filter({ user_email: currentUser.email }),
+    enabled: hasScope,
     initialData: [],
   });
 
@@ -66,8 +72,8 @@ export default function Analytics() {
       {/* Summary */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {[
-          { label: 'Total Revenue', value: `$${totalRevenue.toLocaleString()}`, icon: DollarSign, change: null },
-          { label: 'Total Invested', value: `$${totalInvested.toLocaleString()}`, icon: ArrowUpRight, change: null },
+          { label: 'Total Revenue', value: formatCurrency(totalRevenue, currency), icon: DollarSign, change: null },
+          { label: 'Total Invested', value: formatCurrency(totalInvested, currency), icon: ArrowUpRight, change: null },
           { label: 'ROI', value: `${roi}%`, icon: TrendingUp, change: null },
           { label: 'Avg Equity', value: `${investors.length > 0 ? (investors.reduce((s, i) => s + (i.equity_percentage || 0), 0) / investors.length).toFixed(1) : 0}%`, icon: Percent },
         ].map((stat, i) => (
@@ -92,8 +98,8 @@ export default function Analytics() {
               <BarChart data={monthlyData} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(220, 13%, 88%)" opacity={0.3} />
                 <XAxis dataKey="month" tick={{ fontSize: 11, fill: 'hsl(220, 9%, 46%)' }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fontSize: 11, fill: 'hsl(220, 9%, 46%)' }} axisLine={false} tickLine={false} tickFormatter={v => `$${v / 1000}k`} />
-                <Tooltip content={<CustomTooltip />} />
+                <YAxis tick={{ fontSize: 11, fill: 'hsl(220, 9%, 46%)' }} axisLine={false} tickLine={false} tickFormatter={v => formatCompactCurrency(v, currency)} />
+                <Tooltip content={<CustomTooltip currency={currency} />} />
                 <Bar dataKey="revenue" name="Revenue" fill="hsl(160, 84%, 39%)" radius={[4, 4, 0, 0]} />
                 <Bar dataKey="expenses" name="Expenses" fill="hsl(217, 91%, 60%)" radius={[4, 4, 0, 0]} />
               </BarChart>
@@ -108,8 +114,8 @@ export default function Analytics() {
               <LineChart data={monthlyData} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(220, 13%, 88%)" opacity={0.3} />
                 <XAxis dataKey="month" tick={{ fontSize: 11, fill: 'hsl(220, 9%, 46%)' }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fontSize: 11, fill: 'hsl(220, 9%, 46%)' }} axisLine={false} tickLine={false} tickFormatter={v => `$${v / 1000}k`} />
-                <Tooltip content={<CustomTooltip />} />
+                <YAxis tick={{ fontSize: 11, fill: 'hsl(220, 9%, 46%)' }} axisLine={false} tickLine={false} tickFormatter={v => formatCompactCurrency(v, currency)} />
+                <Tooltip content={<CustomTooltip currency={currency} />} />
                 <Line type="monotone" dataKey="profit" name="Net Profit" stroke="hsl(160, 84%, 39%)" strokeWidth={2.5} dot={{ r: 3 }} />
               </LineChart>
             </ResponsiveContainer>
@@ -136,11 +142,11 @@ export default function Analytics() {
                     <p className="text-xs text-muted-foreground">{inv.equity_percentage}% equity</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm font-semibold">${profit.toLocaleString()}</p>
+                    <p className="text-sm font-semibold">{formatCurrency(profit, currency)}</p>
                     <p className="text-xs text-muted-foreground">Profit share</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm font-semibold">${(inv.total_invested || 0).toLocaleString()}</p>
+                    <p className="text-sm font-semibold">{formatCurrency(inv.total_invested || 0, currency)}</p>
                     <p className="text-xs text-muted-foreground">Invested</p>
                   </div>
                 </div>

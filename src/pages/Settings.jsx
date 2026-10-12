@@ -14,6 +14,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Switch } from '@/components/ui/switch';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { toast } from 'sonner';
+import { CURRENCIES } from '@/lib/currency';
 
 export default function Settings() {
   const { activeCompany } = useOutletContext();
@@ -28,7 +29,7 @@ export default function Settings() {
   // Personal notes - only created_by current user
   const { data: personalNotes = [] } = useQuery({
     queryKey: ['personal-notes', currentUser?.email],
-    queryFn: () => api.entities.Note.filter({ is_personal: true, created_by: currentUser.email }, '-created_date'),
+    queryFn: () => api.entities.Note.filter({ is_personal: true, created_by: currentUser.email, user_email: currentUser.email }, '-created_date'),
     enabled: !!currentUser?.email,
   });
 
@@ -105,7 +106,7 @@ export default function Settings() {
             <div><Label>Currency</Label>
               <Select value={form.currency} onValueChange={v => setForm({ ...form, currency: v })}>
                 <SelectTrigger className="w-40"><SelectValue /></SelectTrigger>
-                <SelectContent>{['USD', 'EUR', 'GBP', 'CAD', 'AUD', 'INR', 'PKR'].map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectContent>
+                <SelectContent>{CURRENCIES.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectContent>
               </Select>
             </div>
             <div><Label>Description</Label><Textarea value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} rows={3} /></div>

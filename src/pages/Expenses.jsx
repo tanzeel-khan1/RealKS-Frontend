@@ -17,19 +17,21 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
 import { format } from 'date-fns';
+import { formatCurrency, CURRENCIES } from '@/lib/currency';
 
 const CATEGORIES = ['marketing', 'salaries', 'software', 'operations', 'equipment', 'taxes', 'travel', 'legal', 'misc'];
 
 export default function Expenses() {
   const { activeCompany, companies } = useOutletContext();
   const companyId = activeCompany?.id;
+  const currency = activeCompany?.currency || 'USD';
 
   if (!companyId) return <NoCompanyBanner hasNoCompanies={!companies?.length} />;
   const queryClient = useQueryClient();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState(null);
   const [filter, setFilter] = useState('all');
-  const [form, setForm] = useState({ title: '', amount: 0, category: 'misc', date: new Date().toISOString().split('T')[0], notes: '', status: 'pending' });
+  const [form, setForm] = useState({ title: '', amount: 0, currency, category: 'misc', date: new Date().toISOString().split('T')[0], notes: '', status: 'pending' });
   const [deleteTarget, setDeleteTarget] = useState(null);
 
   const { data: expenses = [], isLoading } = useQuery({
@@ -45,8 +47,8 @@ export default function Expenses() {
     mutationFn: (data) => api.entities.Expense.create({ ...data, company_id: companyId }),
     onSuccess: (exp) => {
       queryClient.invalidateQueries({ queryKey: ['expenses'] });
-      logActivity(`New expense added: ${exp.title}`, `Amount: $${exp.amount}`);
-      toast.success(`Expense "${exp.title}" added — $${exp.amount}`);
+      logActivity(`New expense added: ${exp.title}`, `Amount: ${formatCurrency(exp.amount, exp.currency || currency)}`);
+      toast.success(`Expense "${exp.title}" added — ${formatCurrency(exp.amount, exp.currency || currency)}`);
       closeDialog();
     },
   });
@@ -70,11 +72,11 @@ export default function Expenses() {
     },
   });
 
-  const closeDialog = () => { setDialogOpen(false); setEditing(null); setForm({ title: '', amount: 0, category: 'misc', date: new Date().toISOString().split('T')[0], notes: '', status: 'pending' }); };
+  const closeDialog = () => { setDialogOpen(false); setEditing(null); setForm({ title: '', amount: 0, currency, category: 'misc', date: new Date().toISOString().split('T')[0], notes: '', status: 'pending' }); };
 
   const openEdit = (exp) => {
     setEditing(exp);
-    setForm({ title: exp.title, amount: exp.amount, category: exp.category, date: exp.date || '', notes: exp.notes || '', status: exp.status });
+    setForm({ title: exp.title, amount: exp.amount, currency: exp.currency || currency, category: exp.category, date: exp.date || '', notes: exp.notes || '', status: exp.status });
     setDialogOpen(true);
   };
 
@@ -93,7 +95,7 @@ export default function Expenses() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Expenses</h1>
-          <p className="text-sm text-muted-foreground mt-1">Total: ${total.toLocaleString()}</p>
+          <p className="text-sm text-muted-foreground mt-1">Total: {formatCurrency(total, currency)}</p>
         </div>
         <Button onClick={() => setDialogOpen(true)} disabled={!companyId} className="gap-2"><Plus className="w-4 h-4" /> Add Expense</Button>
       </div>
@@ -136,7 +138,7 @@ export default function Expenses() {
                         </td>
                         <td className="px-5 py-3.5"><Badge variant="secondary" className="capitalize text-xs">{exp.category}</Badge></td>
                         <td className="px-5 py-3.5 text-sm text-muted-foreground">{exp.date ? format(new Date(exp.date), 'MMM d, yyyy') : '—'}</td>
-                        <td className="px-5 py-3.5 text-sm font-semibold">${(exp.amount || 0).toLocaleString()}</td>
+                        <td className="px-5 py-3.5 text-sm font-semibold">{formatCurrency(exp.amount || 0, exp.currency || currency)}</td>
                         <td className="px-5 py-3.5">
                           <div className="flex items-center gap-1.5">
                             <SIcon className={`w-3.5 h-3.5 ${exp.status === 'approved' ? 'text-primary' : exp.status === 'rejected' ? 'text-destructive' : 'text-muted-foreground'}`} />
@@ -180,8 +182,14 @@ export default function Expenses() {
           <DialogHeader><DialogTitle>{editing ? 'Edit Expense' : 'Add Expense'}</DialogTitle></DialogHeader>
           <div className="space-y-4">
             <div><Label>Title</Label><Input value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} placeholder="Expense title" /></div>
-            <div className="grid grid-cols-2 gap-4">
-              <div><Label>Amount ($)</Label><Input type="number" value={form.amount} onChange={e => setForm({ ...form, amount: Number(e.target.value) })} /></div>
+            <div className="grid grid-cols-3 gap-4">
+              <div><Label>Amount</Label><Input type="number" value={form.amount} onChange={e => setForm({ ...form, amount: Number(e.target.value) })} /></div>
+              <div><Label>Currency</Label>
+                <Select value={form.currency} onValueChange={v => setForm({ ...form, currency: v })}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>{CURRENCIES.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectContent>
+                </Select>
+              </div>
               <div><Label>Date</Label><Input type="date" value={form.date} onChange={e => setForm({ ...form, date: e.target.value })} /></div>
             </div>
             <div><Label>Category</Label>

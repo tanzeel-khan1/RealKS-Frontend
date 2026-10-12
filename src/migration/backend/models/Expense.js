@@ -4,6 +4,7 @@ const expenseSchema = new mongoose.Schema({
   company_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Company', required: true },
   title: { type: String, required: true },
   amount: { type: Number, required: true },
+  currency: { type: String, enum: ['USD', 'EUR', 'GBP', 'CAD', 'AUD', 'INR', 'PKR', 'SAR'], default: 'USD' },
   category: {
     type: String,
     enum: ['marketing', 'salaries', 'software', 'operations', 'equipment', 'taxes', 'travel', 'legal', 'misc'],

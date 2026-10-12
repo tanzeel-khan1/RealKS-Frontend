@@ -18,6 +18,7 @@ import { Plus, Loader2, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 import DeleteConfirmDialog from "@/components/ui/DeleteConfirmDialog";
+import { formatCurrency } from "@/lib/currency";
 import { Badge } from "@/components/ui/badge";
 import {
   Select,
@@ -41,7 +42,7 @@ const CATEGORIES = [
 const PRIORITY = ["Low", "Medium", "High"];
 const STATUS = ["Active", "Paused", "Completed"];
 
-export default function Goals() {
+export default function Goals({ currentUser }) {
   const queryClient = useQueryClient();
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [open, setOpen] = useState(false);
@@ -60,14 +61,15 @@ export default function Goals() {
 
   // 🔹 GET
   const { data: goals = [], isLoading } = useQuery({
-    queryKey: ["goals"],
-    queryFn: () => api.entities.Goal.list("-created_date"),
+    queryKey: ["goals", currentUser?.email],
+    queryFn: () => api.entities.Goal.filter({ user_email: currentUser.email }, "-created_date"),
+    enabled: !!currentUser?.email,
     initialData: [],
   });
 
   // 🔹 CREATE
   const createMutation = useMutation({
-    mutationFn: (data) => api.entities.Goal.create(data),
+    mutationFn: (data) => api.entities.Goal.create({ ...data, user_email: currentUser?.email }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["goals"] });
       toast.success("Goal created");
@@ -208,8 +210,8 @@ export default function Goals() {
 
                   <div className="mt-5">
                     <div className="flex justify-between text-sm mb-2">
-                      <span>${g.currentAmount}</span>
-                      <span>${g.targetAmount}</span>
+                      <span>{formatCurrency(g.currentAmount, g.currency)}</span>
+                      <span>{formatCurrency(g.targetAmount, g.currency)}</span>
                     </div>
 
                     <div className="h-2 rounded-full bg-muted overflow-hidden">

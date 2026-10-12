@@ -19,14 +19,15 @@ const iconMap = {
 };
 
 export default function ActivityLog() {
-  const { activeCompany } = useOutletContext();
+  const { activeCompany, currentUser } = useOutletContext();
   const companyId = activeCompany?.id;
 
   const { data: activities = [], isLoading } = useQuery({
-    queryKey: ['all-activities', companyId],
+    queryKey: ['all-activities', companyId, currentUser?.email],
     queryFn: () => companyId
       ? api.entities.Activity.filter({ company_id: companyId }, '-created_date', 50)
-      : api.entities.Activity.list('-created_date', 50),
+      : api.entities.Activity.filter({ user_email: currentUser?.email }, '-created_date', 50),
+    enabled: !!companyId || !!currentUser?.email,
     initialData: [],
   });
 

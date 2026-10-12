@@ -169,7 +169,7 @@ export default function CreateCompany() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {["USD", "EUR", "GBP", "CAD", "AUD", "INR", "PKR"].map(
+                    {CURRENCIES.map(
                       (c) => (
                         <SelectItem key={c} value={c}>
                           {c}
@@ -261,9 +261,9 @@ export default function CreateCompany() {
 
           <Dialog open={showLimitModal} onOpenChange={setShowLimitModal}>
             <DialogContent className="max-w-md gap-0 overflow-hidden p-0">
-              <div className="relative overflow-hidden bg-[#0c0e16] px-6 py-8 text-center">
-                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(231,182,60,0.15),transparent_55%)]" />
-                <div className="relative mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#f0c74f] via-[#d9ac34] to-[#9a7718] shadow-[0_10px_30px_-8px_rgba(199,154,39,0.8)]">
+              <div className="relative overflow-hidden bg-[#04140d] px-6 py-8 text-center">
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(34,197,94,0.15),transparent_55%)]" />
+                <div className="relative mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#34d399] via-[#10b981] to-[#047857] shadow-[0_10px_30px_-8px_rgba(22,163,74,0.8)]">
                   <Building2 className="h-6 w-6 text-black" />
                 </div>
                 <h2 className="relative text-xl font-semibold text-white">

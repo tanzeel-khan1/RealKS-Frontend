@@ -1,5 +1,6 @@
 import React from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { formatCurrency, formatCompactCurrency } from '@/lib/currency';
 
 const data = [
   { month: 'Jan', revenue: 18000, expenses: 12000 },
@@ -16,21 +17,21 @@ const data = [
   { month: 'Dec', revenue: 58000, expenses: 24000 },
 ];
 
-const CustomTooltip = ({ active, payload, label }) => {
+const CustomTooltip = ({ active, payload, label, currency }) => {
   if (!active || !payload) return null;
   return (
     <div className="bg-card border border-border rounded-lg p-3 shadow-xl">
       <p className="text-xs font-semibold text-foreground mb-1">{label}</p>
       {payload.map((entry, i) => (
         <p key={i} className="text-xs" style={{ color: entry.color }}>
-          {entry.name}: ${entry.value.toLocaleString()}
+          {entry.name}: {formatCurrency(entry.value, currency)}
         </p>
       ))}
     </div>
   );
 };
 
-export default function RevenueChart() {
+export default function RevenueChart({ currency = 'USD' }) {
   return (
     <div className="bg-card border border-border rounded-xl p-5">
       <div className="flex items-center justify-between mb-5">
@@ -54,8 +55,8 @@ export default function RevenueChart() {
             </defs>
             <CartesianGrid strokeDasharray="3 3" stroke="hsl(220, 13%, 88%)" opacity={0.3} />
             <XAxis dataKey="month" tick={{ fontSize: 11, fill: 'hsl(220, 9%, 46%)' }} axisLine={false} tickLine={false} />
-            <YAxis tick={{ fontSize: 11, fill: 'hsl(220, 9%, 46%)' }} axisLine={false} tickLine={false} tickFormatter={v => `$${v / 1000}k`} />
-            <Tooltip content={<CustomTooltip />} />
+            <YAxis tick={{ fontSize: 11, fill: 'hsl(220, 9%, 46%)' }} axisLine={false} tickLine={false} tickFormatter={v => formatCompactCurrency(v, currency)} />
+            <Tooltip content={<CustomTooltip currency={currency} />} />
             <Area type="monotone" dataKey="revenue" name="Revenue" stroke="hsl(160, 84%, 39%)" fill="url(#revGrad)" strokeWidth={2} />
             <Area type="monotone" dataKey="expenses" name="Expenses" stroke="hsl(217, 91%, 60%)" fill="url(#expGrad)" strokeWidth={2} />
           </AreaChart>

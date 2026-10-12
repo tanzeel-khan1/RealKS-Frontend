@@ -89,7 +89,7 @@ export default function TopBar({ sidebarWidth, showMenuButton, onOpenCommand, on
             <Button variant="ghost" size="icon" className="relative">
               <Bell className="w-[18px] h-[18px]" />
               {unreadCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-gradient-to-b from-[#ecbf45] to-[#c89b2a] text-background text-[10px] font-bold rounded-full flex items-center justify-center shadow-[0_2px_8px_-2px_rgba(199,154,39,0.8)]">
+                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-gradient-to-b from-[#34d399] to-[#0e9f6e] text-background text-[10px] font-bold rounded-full flex items-center justify-center shadow-[0_2px_8px_-2px_rgba(22,163,74,0.8)]">
                   {unreadCount}
                 </span>
               )}

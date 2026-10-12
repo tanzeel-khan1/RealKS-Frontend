@@ -20,7 +20,7 @@ export default function ActivityFeed({ companyId }) {
     queryKey: ['activities', companyId],
     queryFn: () => companyId
       ? api.entities.Activity.filter({ company_id: companyId }, '-created_date', 10)
-      : api.entities.Activity.list('-created_date', 10),
+      : [],
     initialData: [],
   });
 

@@ -36,7 +36,7 @@ export default function PersonalDocuments({ currentUser }) {
 
   const { data: documents = [] } = useQuery({
     queryKey: ['personal-documents', currentUser?.email],
-    queryFn: () => api.entities.Document.filter({ is_personal: true }, '-created_date'),
+    queryFn: () => api.entities.Document.filter({ is_personal: true, user_email: currentUser?.email }, '-created_date'),
     initialData: [],
     enabled: !!currentUser,
   });

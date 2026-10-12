@@ -12,6 +12,7 @@ import {
 import TableSkeleton from "@/components/ui/TableSkeleton";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/i18n";
+import { formatCurrency } from "@/lib/currency";
 import jsPDF from "jspdf";
 import {
   BarChart,
@@ -40,28 +41,28 @@ const MONTHS = [
   "Dec",
 ];
 
-const CustomBarTooltip = ({ active, payload, label }) => {
+const CustomBarTooltip = ({ active, payload, label, currency }) => {
   if (!active || !payload?.length) return null;
   return (
     <div className="bg-card border border-border rounded-lg p-3 shadow-lg text-xs space-y-1">
       <p className="font-semibold mb-1">{label}</p>
       {payload.map((p, i) => (
         <p key={i} style={{ color: p.color }}>
-          {p.name}: ${p.value.toLocaleString()}
+          {p.name}: {formatCurrency(p.value, currency)}
         </p>
       ))}
     </div>
   );
 };
 
-const CustomLineTooltip = ({ active, payload, label }) => {
+const CustomLineTooltip = ({ active, payload, label, currency }) => {
   if (!active || !payload?.length) return null;
   return (
     <div className="bg-card border border-border rounded-lg p-3 shadow-lg text-xs space-y-1">
       <p className="font-semibold mb-1">{label}</p>
       {payload.map((p, i) => (
         <p key={i} style={{ color: p.color }}>
-          {p.name}: ${p.value.toLocaleString()}
+          {p.name}: {formatCurrency(p.value, currency)}
         </p>
       ))}
     </div>
@@ -73,6 +74,7 @@ export default function Dashboard() {
   const { activeCompany } = useOutletContext();
   const navigate = useNavigate();
   const companyId = activeCompany?.id;
+  const currency = activeCompany?.currency || "USD";
 
   const { data: expenses = [], isLoading: expLoading } = useQuery({
     queryKey: ["expenses", companyId],
@@ -169,9 +171,9 @@ export default function Dashboard() {
     const yearProfit = yearRevenue - yearExpenses;
 
     const summaryRows = [
-      ["Total Revenue", `$${yearRevenue.toLocaleString()}`],
-      [t("dashboard.totalExpenses"), `$${yearExpenses.toLocaleString()}`],
-      ["Net Profit / Loss", `$${yearProfit.toLocaleString()}`],
+      ["Total Revenue", formatCurrency(yearRevenue, currency)],
+      [t("dashboard.totalExpenses"), formatCurrency(yearExpenses, currency)],
+      ["Net Profit / Loss", formatCurrency(yearProfit, currency)],
     ];
 
     summaryRows.forEach(([label, value], i) => {
@@ -234,14 +236,14 @@ export default function Dashboard() {
       doc.setTextColor(0, 0, 0);
       doc.setFontSize(9);
       doc.text(month, 14, y);
-      doc.text(`$${rev.toLocaleString()}`, 85, y, { align: "right" });
-      doc.text(`$${exp.toLocaleString()}`, 140, y, { align: "right" });
+      doc.text(formatCurrency(rev, currency), 85, y, { align: "right" });
+      doc.text(formatCurrency(exp, currency), 140, y, { align: "right" });
       doc.setTextColor(
         profit >= 0 ? 30 : 200,
         profit >= 0 ? 130 : 0,
         profit >= 0 ? 60 : 0,
       );
-      doc.text(`$${profit.toLocaleString()}`, pageW - 14, y, {
+      doc.text(formatCurrency(profit, currency), pageW - 14, y, {
         align: "right",
       });
       doc.setDrawColor(240, 240, 240);
@@ -266,13 +268,13 @@ export default function Dashboard() {
   const metricCards = [
     {
       label: "Monthly Revenue",
-      value: `$${(totalRevenue / 12).toLocaleString(undefined, { maximumFractionDigits: 0 })}`,
+      value: formatCurrency(totalRevenue / 12, currency, { maximumFractionDigits: 0 }),
       change: 6.1,
       positive: true,
     },
     {
       label: "Net Profit",
-      value: `$${netProfit.toLocaleString()}`,
+      value: formatCurrency(netProfit, currency),
       change: netProfit >= 0 ? 8.4 : -4.2,
       positive: netProfit >= 0,
     },
@@ -282,7 +284,7 @@ export default function Dashboard() {
     <div className="space-y-6 pb-8">
       {/* Header */}
       <div className="card-surface relative overflow-hidden px-6 py-5 sm:px-7 sm:py-6">
-        <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#e7b63c]/[0.08] blur-2xl" />
+        <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#10b981]/[0.08] blur-2xl" />
         <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="eyebrow mb-2">t('dashboard.executiveOverview')</p>
@@ -312,9 +314,9 @@ export default function Dashboard() {
       {/* Welcome + Metric Cards */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         {/* Welcome card */}
-        <div className="relative overflow-hidden rounded-2xl bg-[#0c0e16] p-5 text-white shadow-[0_20px_60px_-20px_rgba(12,14,22,0.7)]">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(231,182,60,0.15),transparent_55%)]" />
-          <div className="pointer-events-none absolute -bottom-14 -right-10 h-40 w-40 rounded-full border-[20px] border-[#e7b63c]/10" />
+        <div className="relative overflow-hidden rounded-2xl bg-[#04140d] p-5 text-white shadow-[0_20px_60px_-20px_rgba(12,14,22,0.7)]">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(34,197,94,0.15),transparent_55%)]" />
+          <div className="pointer-events-none absolute -bottom-14 -right-10 h-40 w-40 rounded-full border-[20px] border-[#10b981]/10" />
           <div className="relative z-10">
             <p className="text-xs text-white/50">Welcome back</p>
             <h2 className="mt-1 truncate font-display text-xl">
@@ -325,10 +327,10 @@ export default function Dashboard() {
             </p>
             <div className="mt-5">
               <p className="text-3xl font-semibold tracking-tight">
-                ${totalExpenses.toLocaleString()}
+                {formatCurrency(totalExpenses, currency)}
               </p>
               <p className="mt-1 flex items-center gap-1 text-xs text-white/50">
-                <ArrowUpRight className="h-3 w-3 text-[#e7b63c]" /> +12% from
+                <ArrowUpRight className="h-3 w-3 text-[#34d399]" /> +12% from
                 last month
               </p>
             </div>
@@ -367,7 +369,7 @@ export default function Dashboard() {
             </div>
             <p className="text-3xl font-semibold tracking-tight">{m.value}</p>
             <div className="h-1.5 w-full rounded-full bg-secondary overflow-hidden">
-              <div className="h-full w-3/4 rounded-full bg-gradient-to-r from-[#e7b63c] to-[#c89b2a] opacity-70" />
+              <div className="h-full w-3/4 rounded-full bg-gradient-to-r from-[#34d399] to-[#10b981] opacity-70" />
             </div>
           </div>
         ))}
@@ -391,7 +393,7 @@ export default function Dashboard() {
                   Revenue
                 </p>
                 <p className="mt-1 text-sm font-semibold">
-                  ${totalRevenue.toLocaleString()}
+                  {formatCurrency(totalRevenue, currency)}
                 </p>
               </div>
               <div>
@@ -399,7 +401,7 @@ export default function Dashboard() {
                   Expenses
                 </p>
                 <p className="mt-1 text-sm font-semibold">
-                  ${totalExpenses.toLocaleString()}
+                  {formatCurrency(totalExpenses, currency)}
                 </p>
               </div>
             </div>
@@ -414,13 +416,13 @@ export default function Dashboard() {
               />
               <YAxis hide />
               <Tooltip
-                content={<CustomBarTooltip />}
+                content={<CustomBarTooltip currency={currency} />}
                 cursor={{ fill: "hsl(var(--muted) / 0.4)" }}
               />{" "}
               <Bar
                 dataKey="revenue"
                 name="Revenue"
-                fill="#c89b2a"
+                fill="#10b981"
                 radius={[4, 4, 0, 0]}
               />
               <Bar
@@ -440,7 +442,7 @@ export default function Dashboard() {
               <h3 className="text-base font-semibold">Profit Trend</h3>
               <div className="flex items-center gap-2 mt-2">
                 <p className="text-3xl font-semibold tracking-tight">
-                  ${totalPaid.toLocaleString()}
+                  {formatCurrency(totalPaid, currency)}
                 </p>
                 <span className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-0.5 bg-emerald-500/10 rounded-full px-2 py-0.5">
                   <ArrowUpRight className="w-3 h-3" /> +2.5%
@@ -460,12 +462,12 @@ export default function Dashboard() {
                 tickLine={false}
               />
               <YAxis hide />
-              <Tooltip content={<CustomLineTooltip />} />
+              <Tooltip content={<CustomLineTooltip currency={currency} />} />
               <Line
                 type="monotone"
                 dataKey="revenue"
                 name="Revenue"
-                stroke="#c89b2a"
+                stroke="#10b981"
                 strokeWidth={2.5}
                 dot={false}
                 activeDot={{ r: 4 }}
@@ -529,7 +531,7 @@ export default function Dashboard() {
                       {inv.recipient_name || "—"}
                     </td>
                     <td className="py-2.5 text-right font-semibold">
-                      ${(inv.total_amount || inv.amount || 0).toLocaleString()}
+                      {formatCurrency(inv.total_amount || inv.amount || 0, inv.currency || currency)}
                     </td>
                     <td className="py-2.5 text-right">
                       <span
