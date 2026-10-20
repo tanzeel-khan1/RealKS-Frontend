@@ -125,11 +125,11 @@ export default function FinancialSection({ companies, allInvoices, allExpenses, 
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <StatCard icon={DollarSign} label="Total Revenue" value={formatCurrency(totalRevenue, currency)}
-          color={{ bg: 'bg-green-100', text: 'text-green-600' }} sub={`${filteredInvoices.length} paid invoices`} />
+          color={{ bg: 'bg-navy-100', text: 'text-navy-600' }} sub={`${filteredInvoices.length} paid invoices`} />
         <StatCard icon={TrendingDown} label="Total Expenses" value={formatCurrency(totalExpenses, currency)}
           color={{ bg: 'bg-red-100', text: 'text-red-500' }} sub={`${filteredExpenses.length} approved`} />
         <StatCard icon={TrendingUp} label="Net Profit" value={formatCurrency(netProfit, currency)}
-          color={{ bg: netProfit >= 0 ? 'bg-emerald-100' : 'bg-red-100', text: netProfit >= 0 ? 'text-emerald-600' : 'text-red-500' }} sub="Revenue − Expenses" />
+          color={{ bg: netProfit >= 0 ? 'bg-sky-100' : 'bg-red-100', text: netProfit >= 0 ? 'text-sky-700' : 'text-red-500' }} sub="Revenue − Expenses" />
         <StatCard icon={BarChart2} label="Profit Margin" value={`${profitMargin}%`}
           color={{ bg: 'bg-blue-100', text: 'text-blue-600' }} sub="Overall margin" />
       </div>
@@ -173,7 +173,7 @@ export default function FinancialSection({ companies, allInvoices, allExpenses, 
                   <p className="text-[10px] text-muted-foreground">{c.industry || 'No industry'}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-xs text-green-600 font-medium">{formatCurrency(row.Revenue, c.currency)}</p>
+                  <p className="text-xs text-navy-600 font-medium">{formatCurrency(row.Revenue, c.currency)}</p>
                   <p className="text-[10px] text-muted-foreground">revenue</p>
                 </div>
                 <div className="text-right">
@@ -181,7 +181,7 @@ export default function FinancialSection({ companies, allInvoices, allExpenses, 
                   <p className="text-[10px] text-muted-foreground">expenses</p>
                 </div>
                 <div className="text-right">
-                  <p className={`text-xs font-bold ${row.Profit >= 0 ? 'text-emerald-600' : 'text-red-500'}`}>
+                  <p className={`text-xs font-bold ${row.Profit >= 0 ? 'text-navy-600' : 'text-red-500'}`}>
                     {formatCurrency(row.Profit, c.currency)}
                   </p>
                   <p className="text-[10px] text-muted-foreground">profit</p>

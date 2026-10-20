@@ -6,7 +6,7 @@ const CATEGORY_COLORS = {
   marketing: 'bg-blue-100 text-blue-700', salaries: 'bg-purple-100 text-purple-700',
   software: 'bg-cyan-100 text-cyan-700', operations: 'bg-orange-100 text-orange-700',
   equipment: 'bg-yellow-100 text-yellow-700', taxes: 'bg-red-100 text-red-700',
-  travel: 'bg-green-100 text-green-700', legal: 'bg-indigo-100 text-indigo-700',
+  travel: 'bg-navy-200 text-navy-800', legal: 'bg-indigo-100 text-indigo-700',
   misc: 'bg-gray-100 text-gray-700',
 };
 
@@ -126,7 +126,7 @@ Return ONLY valid JSON:
                   onClick={() => handleSelectSheet(sheet)}
                   className={`w-full text-left p-3 rounded-lg border transition-colors flex items-center gap-3 ${selectedSheet?.id === sheet.id ? 'border-primary bg-primary/5' : 'border-border hover:border-primary hover:bg-primary/5'}`}
                 >
-                  <Table2 className="w-4 h-4 text-green-600 flex-shrink-0" />
+                  <Table2 className="w-4 h-4 text-navy-600 flex-shrink-0" />
                   <div className="min-w-0">
                     <p className="text-sm font-medium truncate">{sheet.name}</p>
                     <p className="text-xs text-muted-foreground">{new Date(sheet.modifiedTime).toLocaleDateString()}</p>
@@ -159,7 +159,7 @@ Return ONLY valid JSON:
             </div>
           </div>
 
-          <p className="text-xs text-green-600 font-medium text-center">✓ Data extracted — preview shown below</p>
+          <p className="text-xs text-navy-600 font-medium text-center">✓ Data extracted — preview shown below</p>
         </div>
       )}
     </div>

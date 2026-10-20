@@ -13,7 +13,7 @@ import { toast } from 'sonner';
 import { formatCurrency } from '@/lib/currency';
 
 const STATUS_COLORS = {
-  active: 'bg-green-100 text-green-700',
+  active: 'bg-navy-100 text-navy-700',
   inactive: 'bg-yellow-100 text-yellow-700',
   terminated: 'bg-red-100 text-red-700',
 };
@@ -293,7 +293,7 @@ export default function EmployeesTab({ companyId, currency = 'USD' }) {
                 </label>
                 {form.offer_letter_url && <button onClick={() => setViewImg(form.offer_letter_url)} className="text-primary hover:opacity-70"><Eye className="w-4 h-4" /></button>}
               </div>
-              {form.offer_letter_url && <p className="text-[10px] text-green-600">✓ Uploaded</p>}
+              {form.offer_letter_url && <p className="text-[10px] text-navy-600">✓ Uploaded</p>}
             </div>
 
             <div className="space-y-1.5">
@@ -309,7 +309,7 @@ export default function EmployeesTab({ companyId, currency = 'USD' }) {
                 </label>
                 {form.nic_image_url && <button onClick={() => setViewImg(form.nic_image_url)} className="text-primary hover:opacity-70"><Eye className="w-4 h-4" /></button>}
               </div>
-              {form.nic_image_url && <p className="text-[10px] text-green-600">✓ Uploaded</p>}
+              {form.nic_image_url && <p className="text-[10px] text-navy-600">✓ Uploaded</p>}
             </div>
           </div>
           <DialogFooter className="mt-4">

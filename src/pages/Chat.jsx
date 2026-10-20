@@ -27,8 +27,8 @@ export default function Chat() {
       </div>
       <div>
         <p className="text-sm font-semibold">{activeCompany?.name} — Company Chat</p>
-        <p className="text-xs text-green-500 font-medium flex items-center gap-1">
-          <span className="w-1.5 h-1.5 rounded-full bg-green-500 inline-block" /> Live
+        <p className="text-xs text-navy-500 font-medium flex items-center gap-1">
+          <span className="w-1.5 h-1.5 rounded-full bg-navy-500 inline-block" /> Live
         </p>
       </div>
     </div>

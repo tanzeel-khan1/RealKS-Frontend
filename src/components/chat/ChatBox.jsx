@@ -13,7 +13,7 @@ const QUICK_REACTIONS = ['❤️','😂','👍','😮','😢','🙏'];
 function Avatar({ name, email, size = 9 }) {
   const label = name || email || '?';
   const initials = label.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase() || '?';
-  const colors = ['bg-blue-500','bg-green-500','bg-purple-500','bg-pink-500','bg-orange-500','bg-cyan-500','bg-rose-500','bg-indigo-500'];
+  const colors = ['bg-blue-500','bg-navy-700','bg-purple-500','bg-pink-500','bg-orange-500','bg-cyan-500','bg-rose-500','bg-indigo-500'];
   const color = colors[(label.charCodeAt(0) || 0) % colors.length];
   return (
     <div className={`w-${size} h-${size} rounded-full ${color} flex items-center justify-center text-white font-bold text-xs flex-shrink-0 select-none`}>
@@ -238,7 +238,7 @@ export default function ChatBox({ roomId, currentUser, headerContent, onBack }) 
         )}
         <div className="flex-1">{headerContent}</div>
         <div className="flex items-center gap-2">
-          <span className={`w-2 h-2 rounded-full ${connected ? 'bg-green-500' : 'bg-yellow-500'}`} title={connected ? 'Connected' : 'Reconnecting...'} />
+          <span className={`w-2 h-2 rounded-full ${connected ? 'bg-navy-500' : 'bg-yellow-500'}`} title={connected ? 'Connected' : 'Reconnecting...'} />
           <button onClick={() => setShowSearch(s => !s)} className={`p-2 rounded-lg hover:bg-muted transition-colors ${showSearch ? 'bg-muted' : ''}`}>
             <Search className="w-4 h-4 text-muted-foreground" />
           </button>

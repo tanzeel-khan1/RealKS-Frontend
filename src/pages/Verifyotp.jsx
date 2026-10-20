@@ -48,12 +48,12 @@ const Verifyotp = () => {
 
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-4 py-8">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(16,185,129,0.16),transparent_55%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(58,86,194,0.16),transparent_55%)]" />
       <div className="absolute -left-24 -top-24 h-72 w-72 rounded-full bg-primary/20 blur-3xl" />
       <div className="absolute -bottom-32 -right-24 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />
       <Card className="card-surface relative w-full max-w-md overflow-hidden rounded-3xl">
         <div className="px-6 py-7 sm:px-8">
-          <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#34d399] via-[#10b981] to-[#047857] text-[#04160f] shadow-[0_10px_30px_-10px_rgba(16,185,129,0.8)]"><ShieldCheck className="h-6 w-6" /></div>
+          <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#5b7ad4] via-[#3a56c2] to-[#1e2d63] text-[#ffffff] shadow-[0_10px_30px_-10px_rgba(58,86,194,0.8)]"><ShieldCheck className="h-6 w-6" /></div>
           <p className="eyebrow mb-2">Verification</p>
           <CardTitle className="font-display text-3xl font-normal tracking-tight">Verify your email</CardTitle>
           <p className="mt-2 text-sm leading-6 text-muted-foreground">One quick step before you enter your workspace.</p>

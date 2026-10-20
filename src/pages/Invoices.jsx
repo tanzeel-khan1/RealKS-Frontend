@@ -222,10 +222,10 @@ export default function Invoices() {
       {/* Send Email Dialog */}
       <Dialog open={emailDialog} onOpenChange={setEmailDialog}>
         <DialogContent className="max-w-xl overflow-hidden rounded-2xl border-0 p-0 shadow-2xl">
-          <div className="bg-[#04140d] px-6 py-6 text-white sm:px-7">
+          <div className="bg-[#0d1530] px-6 py-6 text-white sm:px-7">
             <DialogHeader>
               <div className="flex items-start gap-3 pr-6">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-300 text-slate-950"><Mail className="h-5 w-5" /></div>
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-navy-300 text-slate-950"><Mail className="h-5 w-5" /></div>
                 <div><DialogTitle className="text-xl text-white">Send invoice</DialogTitle><p className="mt-1 text-sm text-slate-300">Deliver a clean invoice summary to your client.</p></div>
               </div>
             </DialogHeader>
@@ -237,7 +237,7 @@ export default function Invoices() {
             </div>
             <div className="rounded-2xl border border-border bg-card p-5 shadow-sm"><div className="space-y-2"><Label htmlFor="invoice-email" className="text-xs font-semibold">Recipient email</Label><Input id="invoice-email" value={emailTo} onChange={e => setEmailTo(e.target.value)} placeholder="recipient@example.com" type="email" className="h-11 bg-background" /><p className="text-xs text-muted-foreground">The recipient will receive the invoice details and due date.</p></div></div>
           </div>
-          <DialogFooter className="border-t border-border bg-card px-6 py-4 sm:px-7"><Button variant="outline" onClick={() => setEmailDialog(false)}>Cancel</Button><Button onClick={sendInvoiceEmail} disabled={!emailTo.trim() || sendingEmail} className="gap-2 bg-[#04140d] text-white hover:bg-[#0b2417]"><Mail className="h-4 w-4" />{sendingEmail ? 'Sending...' : 'Send invoice'}</Button></DialogFooter>
+          <DialogFooter className="border-t border-border bg-card px-6 py-4 sm:px-7"><Button variant="outline" onClick={() => setEmailDialog(false)}>Cancel</Button><Button onClick={sendInvoiceEmail} disabled={!emailTo.trim() || sendingEmail} className="gap-2 bg-[#0d1530] text-white hover:bg-[#17234f]"><Mail className="h-4 w-4" />{sendingEmail ? 'Sending...' : 'Send invoice'}</Button></DialogFooter>
         </DialogContent>
       </Dialog>
 

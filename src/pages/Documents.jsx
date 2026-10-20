@@ -40,16 +40,16 @@ const CATEGORIES = [
 
 const CATEGORY_COLORS = {
   legal: 'bg-blue-500/10 text-blue-600',
-  finance: 'bg-green-500/10 text-green-600',
+  finance: 'bg-navy-500/10 text-navy-600',
   tax: 'bg-orange-500/10 text-orange-600',
   hr: 'bg-purple-500/10 text-purple-600',
   contracts: 'bg-cyan-500/10 text-cyan-600',
   investor: 'bg-indigo-500/10 text-indigo-600',
   operations: 'bg-yellow-500/10 text-yellow-600',
-  banking: 'bg-emerald-500/10 text-emerald-600',
+  banking: 'bg-navy-800/10 text-navy-800',
   compliance: 'bg-red-500/10 text-red-600',
   vendor: 'bg-pink-500/10 text-pink-600',
-  audit: 'bg-teal-500/10 text-teal-600',
+  audit: 'bg-sky-500/10 text-sky-600',
   other: 'bg-muted text-muted-foreground',
 };
 

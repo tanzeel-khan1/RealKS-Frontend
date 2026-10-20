@@ -153,8 +153,8 @@ export default function CompaniesSection({
 
                 <div className="mt-6 grid gap-3 sm:grid-cols-3">
                   <div className="rounded-3xl p-4 text-left">
-                    <p className="text-[11px] uppercase tracking-[0.22em] text-emerald-700">Revenue</p>
-                    <p className="mt-2 text-lg font-semibold text-emerald-900">{formatCurrency(revenue, c.currency)}</p>
+                    <p className="text-[11px] uppercase tracking-[0.22em] text-navy-700">Revenue</p>
+                    <p className="mt-2 text-lg font-semibold text-navy-900">{formatCurrency(revenue, c.currency)}</p>
                   </div>
                   <div className="rounded-3xl p-4 text-left">
                     <p className="text-[11px] uppercase tracking-[0.22em] text-rose-700">Expenses</p>
@@ -181,7 +181,7 @@ export default function CompaniesSection({
                   </button>
                   <button
                     onClick={() => setDeleteId(c.id)}
-                    className="rounded-2xl bg-[#06180f] px-4 py-2 text-sm font-medium text-white hover:bg-[#0b2417]"
+                    className="rounded-2xl bg-[#101a38] px-4 py-2 text-sm font-medium text-white hover:bg-[#17234f]"
                   >
                     Delete
                   </button>

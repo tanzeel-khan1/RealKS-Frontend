@@ -194,13 +194,13 @@
 
 //         <p
 //           className={`text-[10px] font-medium flex items-center gap-1 ${isUserOnline(selectedUser.email)
-//               ? "text-green-500"
+//               ? "text-navy-500"
 //               : "text-gray-400"
 //             }`}
 //         >
 //           <span
 //             className={`w-1.5 h-1.5 rounded-full inline-block ${isUserOnline(selectedUser.email)
-//                 ? "bg-green-500"
+//                 ? "bg-navy-500"
 //                 : "bg-gray-400"
 //               }`}
 //           />
@@ -465,10 +465,10 @@ export default function PersonalChat({ currentUser, companies }) {
       <div>
         <p className="text-sm font-semibold">{selectedUser.name}</p>
         <p className={`text-[10px] flex items-center gap-1 ${
-          isUserOnline(selectedUser.email) ? "text-green-500" : "text-gray-400"
+          isUserOnline(selectedUser.email) ? "text-navy-500" : "text-gray-400"
         }`}>
           <span className={`w-1.5 h-1.5 rounded-full ${
-            isUserOnline(selectedUser.email) ? "bg-green-500" : "bg-gray-400"
+            isUserOnline(selectedUser.email) ? "bg-navy-500" : "bg-gray-400"
           }`} />
           {isUserOnline(selectedUser.email) ? "Active" : "Offline"}
         </p>

@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 const COLOR_MAP = {
   yellow:  { dot: 'bg-yellow-400' },
   blue:    { dot: 'bg-blue-400' },
-  green:   { dot: 'bg-green-400' },
+  green:   { dot: 'bg-navy-700' },
   pink:    { dot: 'bg-pink-400' },
   purple:  { dot: 'bg-purple-400' },
   white:   { dot: 'bg-muted-foreground' },

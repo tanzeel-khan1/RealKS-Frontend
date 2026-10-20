@@ -18,7 +18,7 @@ const CATEGORIES = ['work', 'social', 'finance', 'email', 'shopping', 'other'];
 const CATEGORY_COLORS = {
   work: 'bg-blue-100 text-blue-700',
   social: 'bg-pink-100 text-pink-700',
-  finance: 'bg-green-100 text-green-700',
+  finance: 'bg-navy-100 text-navy-700',
   email: 'bg-yellow-100 text-yellow-700',
   shopping: 'bg-orange-100 text-orange-700',
   other: 'bg-gray-100 text-gray-600',
@@ -37,7 +37,7 @@ function getStrength(pwd) {
 
 function StrengthBar({ password }) {
   const s = getStrength(password);
-  const color = s <= 1 ? 'bg-red-500' : s <= 3 ? 'bg-yellow-500' : 'bg-green-500';
+  const color = s <= 1 ? 'bg-red-500' : s <= 3 ? 'bg-yellow-500' : 'bg-navy-500';
   const label = s <= 1 ? 'Weak' : s <= 3 ? 'Fair' : 'Strong';
   return (
     <div className="space-y-1">
@@ -46,7 +46,7 @@ function StrengthBar({ password }) {
           <div key={i} className={`h-1 flex-1 rounded-full transition-all ${i <= s ? color : 'bg-muted'}`} />
         ))}
       </div>
-      <p className={`text-xs ${s <= 1 ? 'text-red-500' : s <= 3 ? 'text-yellow-600' : 'text-green-600'}`}>{label}</p>
+      <p className={`text-xs ${s <= 1 ? 'text-red-500' : s <= 3 ? 'text-yellow-600' : 'text-navy-600'}`}>{label}</p>
     </div>
   );
 }
@@ -208,7 +208,7 @@ export default function Passwords() {
                     <p className="text-sm font-semibold">{p.site_name}</p>
                     <Badge className={`text-xs capitalize ${CATEGORY_COLORS[p.category] || CATEGORY_COLORS.other}`}>{p.category}</Badge>
                     {strength <= 1 && <Badge className="text-xs bg-red-100 text-red-600"><AlertTriangle className="w-2.5 h-2.5 mr-1" />Weak</Badge>}
-                    {strength >= 4 && <Badge className="text-xs bg-green-100 text-green-600"><CheckCircle2 className="w-2.5 h-2.5 mr-1" />Strong</Badge>}
+                    {strength >= 4 && <Badge className="text-xs bg-navy-100 text-navy-600"><CheckCircle2 className="w-2.5 h-2.5 mr-1" />Strong</Badge>}
                   </div>
                   <p className="text-xs text-muted-foreground mt-0.5 truncate">{p.username}</p>
                   {p.site_url && <p className="text-xs text-muted-foreground opacity-60 truncate">{p.site_url}</p>}

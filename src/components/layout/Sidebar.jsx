@@ -64,7 +64,7 @@ export default function Sidebar({
         className={cn(
           "relative flex items-center gap-3 px-3 py-2 rounded-lg text-[13px] font-medium transition-all duration-200",
           location.pathname === item.path
-            ? "bg-sidebar-primary/10 text-sidebar-foreground"
+            ? "bg-sidebar-primary/10 text-sidebar-foreground shadow-[inset_0_1px_0_0_hsl(0_0%_100%/_0.08),0_1px_2px_rgba(0,0,0,0.25)] backdrop-blur-sm"
             : "text-sidebar-foreground/55 hover:bg-sidebar-accent hover:text-sidebar-foreground",
           extra
         )}
@@ -89,15 +89,17 @@ export default function Sidebar({
   return (
     <aside
       style={{ width: isCollapsed ? 72 : 240 }}
-      className="relative h-screen flex flex-col fixed left-0 top-0 z-40 transition-all duration-200 border-r border-sidebar-border bg-sidebar text-sidebar-foreground"
+      className="relative h-screen flex flex-col fixed left-0 top-0 z-40 transition-all duration-200 border-r border-sidebar-border/60 bg-sidebar text-sidebar-foreground shadow-[0_1px_0_0_hsl(0_0%_100%/_0.04)_inset,8px_0_30px_-10px_rgba(0,0,0,0.22)] backdrop-blur-xl"
     >
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-sidebar-foreground/[0.03] via-transparent to-primary/[0.06]" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-sidebar-foreground/[0.02] via-transparent to-primary/[0.05]" />
 
       {/* Logo */}
-      <div className="relative h-14 flex items-center px-4 border-b border-sidebar-border flex-shrink-0">
+      <div className="relative h-14 flex items-center px-4 border-b border-sidebar-border/70 flex-shrink-0">
+        <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent pointer-events-none" />
         <div className="flex items-center gap-2.5 overflow-hidden w-full">
-          <div className="relative h-8 w-8 rounded-xl bg-gradient-to-br from-[#34d399] via-[#10b981] to-[#047857] shadow-[0_6px_20px_-6px_rgba(16,185,129,0.75)] flex items-center justify-center flex-shrink-0">
-            <span className="text-black font-black text-[13px] leading-none tracking-tight">R</span>
+          <div className="relative h-8 w-8 rounded-xl bg-gradient-to-br from-[#5b7ad4] via-[#3a56c2] to-[#1e2d63] shadow-[0_4px_12px_-8px_rgba(37,58,140,0.8)] flex items-center justify-center flex-shrink-0">
+            <span className="absolute inset-0 rounded-xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.25)]" />
+            <span className="relative text-white font-black text-[13px] leading-none tracking-tight">R</span>
             <span className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full border-2 border-sidebar bg-foreground/80" />
           </div>
           {!isCollapsed && (
@@ -115,14 +117,15 @@ export default function Sidebar({
 
       {/* Workspace Switcher */}
       {!isCollapsed && (
-        <div className="relative px-3 py-3 border-b border-sidebar-border flex-shrink-0">
+      <div className="relative px-3 py-3 border-b border-sidebar-border/70 flex-shrink-0">
+        <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent pointer-events-none" />
           <p className="text-[10px] font-semibold text-sidebar-foreground/40 uppercase tracking-widest mb-2 px-1">
             Workspace
           </p>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="w-full flex items-center gap-2 p-2 rounded-xl border border-sidebar-border bg-sidebar-accent/60 hover:bg-sidebar-accent hover:border-primary/40 transition-all text-left">
-                <div className="w-7 h-7 rounded-lg bg-sidebar-accent border border-sidebar-border flex items-center justify-center flex-shrink-0">
+              <button className="w-full flex items-center gap-2 p-2 rounded-xl border border-sidebar-border/70 bg-sidebar-accent/60 hover:bg-sidebar-accent hover:border-primary/30 transition-all text-left shadow-[0_1px_1px_rgba(15,23,42,0.01)] backdrop-blur-sm">
+                <div className="w-7 h-7 rounded-lg bg-sidebar-accent border border-sidebar-border/60 flex items-center justify-center flex-shrink-0">
                   <Building2 className="w-3.5 h-3.5 text-primary" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -180,10 +183,11 @@ export default function Sidebar({
       </div>
 
       {/* User Profile at Bottom */}
-      <div className="relative border-t border-sidebar-border p-3 flex-shrink-0">
+      <div className="relative border-t border-sidebar-border/70 p-3 flex-shrink-0">
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent pointer-events-none" />
         {isCollapsed ? (
           <div className="flex flex-col items-center gap-2">
-            <div className="h-8 w-8 rounded-full bg-sidebar-accent border border-sidebar-border flex items-center justify-center">
+            <div className="h-8 w-8 rounded-full bg-sidebar-accent border border-sidebar-border/70 flex items-center justify-center">
               <span className="text-xs font-semibold">
                 {currentUser?.full_name?.[0] ||
                   currentUser?.email?.[0]?.toUpperCase() ||
@@ -206,9 +210,9 @@ export default function Sidebar({
           </div>
         ) : (
           <>
-            <div className="flex items-center gap-2.5 rounded-xl border border-sidebar-border bg-sidebar-accent/50 p-2">
-              <div className="h-8 w-8 rounded-full bg-gradient-to-br from-[#107a5b] to-[#064e3b] dark:from-[#3a3f55] dark:to-[#1c1e2c] border border-sidebar-border flex items-center justify-center flex-shrink-0">
-                <span className="text-xs font-semibold text-white">
+            <div className="flex items-center gap-2.5 rounded-xl border border-sidebar-border/70 bg-sidebar-accent/60 p-2 shadow-[0_1px_1px_rgba(15,23,42,0.01)] backdrop-blur-sm">
+              <div className="h-8 w-8 rounded-full bg-gradient-to-br from-[#3a56c2] to-[#1e2d63] dark:from-[#3a3f55] dark:to-[#1c1e2c] border border-sidebar-border/60 flex items-center justify-center flex-shrink-0 shadow-[0_4px_14px_-8px_rgba(37,58,140,0.8)]">
+                <span className="relative text-xs font-semibold text-white z-10">
                   {currentUser?.full_name?.[0] ||
                     currentUser?.email?.[0]?.toUpperCase() ||
                     "U"}

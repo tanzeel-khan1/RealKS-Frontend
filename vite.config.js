@@ -43,7 +43,7 @@ export default defineConfig({
   },
 
   server: {
-    port: 7000, 
+    port: 8000, 
 
     proxy: {
       '/api': {

@@ -228,8 +228,8 @@ const Profile = () => {
 // shadow-xl
 
 // ring-2
-// ring-green-400/30
-// dark:ring-green-300/20
+// ring-navy-400/30
+// dark:ring-navy-300/20
 // ring-offset-2
 // ring-offset-white
 // dark:ring-offset-zinc-950
@@ -474,7 +474,7 @@ return (
             {/* User Profile Header */}
             <div className="flex items-center gap-5">
               <div className="relative shrink-0">
-                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-gray-900 to-black dark:from-white dark:to-gray-200 flex items-center justify-center text-white dark:text-black text-2xl sm:text-3xl font-bold shadow-xl ring-2 ring-green-400/30 dark:ring-green-300/20 ring-offset-2 ring-offset-white dark:ring-offset-zinc-950">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-gray-900 to-black dark:from-white dark:to-gray-200 flex items-center justify-center text-white dark:text-black text-2xl sm:text-3xl font-bold shadow-xl ring-2 ring-navy-400/30 dark:ring-navy-300/20 ring-offset-2 ring-offset-white dark:ring-offset-zinc-950">
                   {getInitials(formData.full_name)}
                 </div>
 

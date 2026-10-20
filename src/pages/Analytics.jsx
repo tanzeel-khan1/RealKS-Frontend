@@ -100,7 +100,7 @@ export default function Analytics() {
                 <XAxis dataKey="month" tick={{ fontSize: 11, fill: 'hsl(220, 9%, 46%)' }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fontSize: 11, fill: 'hsl(220, 9%, 46%)' }} axisLine={false} tickLine={false} tickFormatter={v => formatCompactCurrency(v, currency)} />
                 <Tooltip content={<CustomTooltip currency={currency} />} />
-                <Bar dataKey="revenue" name="Revenue" fill="hsl(160, 84%, 39%)" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="revenue" name="Revenue" fill="hsl(223, 78%, 42%)" radius={[4, 4, 0, 0]} />
                 <Bar dataKey="expenses" name="Expenses" fill="hsl(217, 91%, 60%)" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
@@ -116,7 +116,7 @@ export default function Analytics() {
                 <XAxis dataKey="month" tick={{ fontSize: 11, fill: 'hsl(220, 9%, 46%)' }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fontSize: 11, fill: 'hsl(220, 9%, 46%)' }} axisLine={false} tickLine={false} tickFormatter={v => formatCompactCurrency(v, currency)} />
                 <Tooltip content={<CustomTooltip currency={currency} />} />
-                <Line type="monotone" dataKey="profit" name="Net Profit" stroke="hsl(160, 84%, 39%)" strokeWidth={2.5} dot={{ r: 3 }} />
+                <Line type="monotone" dataKey="profit" name="Net Profit" stroke="hsl(223, 78%, 42%)" strokeWidth={2.5} dot={{ r: 3 }} />
               </LineChart>
             </ResponsiveContainer>
           </div>
