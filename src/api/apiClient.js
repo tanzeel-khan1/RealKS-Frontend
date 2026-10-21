@@ -3,13 +3,11 @@ const getToken = () => localStorage.getItem('token');
 const WAKE_TIMEOUT_MS = 45000;
 const RETRY_DELAY_MS = 500;
 
-
 const authHeaders = () => ({
   'Content-Type': 'application/json',
   ...(getToken() ? { Authorization: `Bearer ${getToken()}` } : {}),
 });
 
-// Normalize MongoDB doc to match Base44 field names the frontend already uses
 const normalize = (doc) => {
   if (!doc || typeof doc !== 'object') return doc;
   return {
