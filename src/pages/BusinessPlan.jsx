@@ -14,7 +14,7 @@ const CATEGORIES = [
   { id: 'product',    label: 'Product',     color: 'text-purple-600', bg: 'bg-purple-500/10' },
   { id: 'market',     label: 'Market',      color: 'text-cyan-600',   bg: 'bg-cyan-500/10' },
   { id: 'strategy',   label: 'Strategy',    color: 'text-orange-600', bg: 'bg-orange-500/10' },
-  { id: 'finance',    label: 'Finance',     color: 'text-green-600',  bg: 'bg-green-500/10' },
+  { id: 'finance',    label: 'Finance',     color: 'text-navy-800',  bg: 'bg-navy-500/10' },
   { id: 'team',       label: 'Team',        color: 'text-pink-600',   bg: 'bg-pink-500/10' },
   { id: 'risk',       label: 'Risk',        color: 'text-red-600',    bg: 'bg-red-500/10' },
   { id: 'goals',      label: 'Goals',       color: 'text-indigo-600', bg: 'bg-indigo-500/10' },
@@ -55,12 +55,12 @@ const SECTIONS = [
 
 const COLORS = ['blue', 'green', 'purple', 'orange', 'pink', 'yellow'];
 const COLOR_DOT = {
-  blue: 'bg-blue-500', green: 'bg-green-500', purple: 'bg-purple-500',
+  blue: 'bg-blue-500',   green: 'bg-navy-700', purple: 'bg-purple-500',
   orange: 'bg-orange-500', pink: 'bg-pink-500', yellow: 'bg-yellow-500',
 };
 const COVER_GRADIENTS = {
   blue: 'from-blue-200 to-cyan-100',
-  green: 'from-green-200 to-teal-100',
+  green: 'from-navy-200 to-sky-100',
   purple: 'from-purple-200 to-pink-100',
   orange: 'from-orange-200 to-yellow-100',
   pink: 'from-pink-200 to-rose-100',
@@ -256,7 +256,7 @@ export default function BusinessPlan() {
                         }
                       </div>
                       {hasContent
-                        ? <CheckCircle className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
+                        ? <CheckCircle className="w-3.5 h-3.5 text-navy-500 flex-shrink-0" />
                         : <Circle className="w-3.5 h-3.5 text-muted-foreground/30 flex-shrink-0" />
                       }
                     </button>
@@ -301,7 +301,7 @@ export default function BusinessPlan() {
               {/* Save button */}
               <div className="flex items-center gap-2">
                 {saving && <span className="text-xs text-muted-foreground">Saving...</span>}
-                {saved && <span className="text-xs text-green-600 flex items-center gap-1"><CheckCircle className="w-3.5 h-3.5" />Saved</span>}
+                {saved && <span className="text-xs text-navy-600 flex items-center gap-1"><CheckCircle className="w-3.5 h-3.5" />Saved</span>}
                 <button
                   onClick={handleSaveClick}
                   disabled={saving}

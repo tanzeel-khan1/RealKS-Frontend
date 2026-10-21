@@ -179,8 +179,8 @@ export default function OverviewSection({
             <Legend />
             <Area
               dataKey="Revenue"
-              stroke="#22c55e"
-              fill="#22c55e33"
+              stroke="#3a56c2"
+              fill="#3a56c233"
             />
             <Area
               dataKey="Expenses"

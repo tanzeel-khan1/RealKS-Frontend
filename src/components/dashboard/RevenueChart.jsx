@@ -45,8 +45,8 @@ export default function RevenueChart({ currency = 'USD' }) {
           <AreaChart data={data} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
             <defs>
               <linearGradient id="revGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="hsl(160, 84%, 39%)" stopOpacity={0.2} />
-                <stop offset="95%" stopColor="hsl(160, 84%, 39%)" stopOpacity={0} />
+                <stop offset="5%" stopColor="hsl(223, 78%, 42%)" stopOpacity={0.2} />
+                <stop offset="95%" stopColor="hsl(223, 78%, 42%)" stopOpacity={0} />
               </linearGradient>
               <linearGradient id="expGrad" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="hsl(217, 91%, 60%)" stopOpacity={0.2} />
@@ -57,7 +57,7 @@ export default function RevenueChart({ currency = 'USD' }) {
             <XAxis dataKey="month" tick={{ fontSize: 11, fill: 'hsl(220, 9%, 46%)' }} axisLine={false} tickLine={false} />
             <YAxis tick={{ fontSize: 11, fill: 'hsl(220, 9%, 46%)' }} axisLine={false} tickLine={false} tickFormatter={v => formatCompactCurrency(v, currency)} />
             <Tooltip content={<CustomTooltip currency={currency} />} />
-            <Area type="monotone" dataKey="revenue" name="Revenue" stroke="hsl(160, 84%, 39%)" fill="url(#revGrad)" strokeWidth={2} />
+            <Area type="monotone" dataKey="revenue" name="Revenue" stroke="hsl(223, 78%, 42%)" fill="url(#revGrad)" strokeWidth={2} />
             <Area type="monotone" dataKey="expenses" name="Expenses" stroke="hsl(217, 91%, 60%)" fill="url(#expGrad)" strokeWidth={2} />
           </AreaChart>
         </ResponsiveContainer>

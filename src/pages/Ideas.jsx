@@ -18,7 +18,7 @@ const COLUMNS = [
   { key: 'new', label: 'New', dot: 'bg-yellow-400' },
   { key: 'in_progress', label: 'In Progress', dot: 'bg-blue-500' },
   { key: 'on_hold', label: 'On Hold', dot: 'bg-orange-400' },
-  { key: 'done', label: 'Done', dot: 'bg-green-500' },
+  { key: 'done', label: 'Done', dot: 'bg-navy-700' },
   { key: 'cancelled', label: 'Cancelled', dot: 'bg-gray-400' },
 ];
 

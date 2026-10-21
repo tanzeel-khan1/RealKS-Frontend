@@ -11,7 +11,7 @@ import { format, isToday, isYesterday } from 'date-fns';
 import NoCompanyBanner from '@/components/ui/NoCompanyBanner';
 
 const COLOR_DOT = {
-  yellow: 'bg-yellow-400', blue: 'bg-blue-400', green: 'bg-green-400',
+  yellow: 'bg-yellow-400', blue: 'bg-blue-400', green: 'bg-navy-700',
   pink: 'bg-pink-400', purple: 'bg-purple-400', white: 'bg-gray-300',
 };
 

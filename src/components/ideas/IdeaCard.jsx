@@ -7,7 +7,7 @@ const STATUS_COLORS = {
   new: 'bg-yellow-100 text-yellow-700 border-yellow-200',
   in_progress: 'bg-blue-100 text-blue-700 border-blue-200',
   on_hold: 'bg-orange-100 text-orange-700 border-orange-200',
-  done: 'bg-green-100 text-green-700 border-green-200',
+  done: 'bg-navy-700 text-white border-navy-700',
   cancelled: 'bg-gray-100 text-gray-500 border-gray-200',
 };
 

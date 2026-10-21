@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { api } from '@/api/apiClient';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 
-const COLORS = ['hsl(160, 84%, 39%)', 'hsl(217, 91%, 60%)', 'hsl(47, 96%, 53%)', 'hsl(271, 91%, 65%)', 'hsl(349, 89%, 60%)'];
+const COLORS = ['hsl(223, 78%, 42%)', 'hsl(217, 91%, 60%)', 'hsl(47, 96%, 53%)', 'hsl(271, 91%, 65%)', 'hsl(349, 89%, 60%)'];
 
 export default function InvestorBreakdown({ companyId }) {
   const { data: investors = [] } = useQuery({

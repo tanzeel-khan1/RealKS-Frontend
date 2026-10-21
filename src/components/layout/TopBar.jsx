@@ -46,7 +46,7 @@ export default function TopBar({ sidebarWidth, showMenuButton, onOpenCommand, on
 
   return (
     <header
-      className="fixed top-0 right-0 left-0 lg:left-[var(--sidebar-w)] h-14 bg-background/80 backdrop-blur-md border-b border-border z-30 flex items-center gap-2 px-4 transition-all duration-200"
+      className="fixed top-0 right-0 left-0 lg:left-[var(--sidebar-w)] h-14 bg-background/75 backdrop-blur-xl border-b border-border/60 z-30 flex items-center gap-2 px-4 transition-all duration-200"
       style={{ '--sidebar-w': `${sidebarWidth}px` }}
     >
       {showMenuButton && (
@@ -61,7 +61,7 @@ export default function TopBar({ sidebarWidth, showMenuButton, onOpenCommand, on
 
       <button
         onClick={onOpenCommand}
-        className="flex items-center gap-2 px-3.5 py-2 rounded-xl border border-border/70 bg-card/60 backdrop-blur hover:bg-card hover:border-foreground/20 text-muted-foreground text-sm transition-all shadow-[0_1px_2px_rgba(0,0,0,0.04)] flex-1 max-w-sm"
+        className="flex items-center gap-2 px-3.5 py-2 rounded-xl border border-border/60 bg-card/80 backdrop-blur-xl hover:bg-card hover:border-foreground/15 text-muted-foreground text-sm transition-all shadow-[0_1px_1px_rgba(15,23,42,0.02)] flex-1 max-w-sm"
       >
         <Search className="w-4 h-4 shrink-0" />
         <span>{t('topbar.searchAnything')}</span>
@@ -89,7 +89,7 @@ export default function TopBar({ sidebarWidth, showMenuButton, onOpenCommand, on
             <Button variant="ghost" size="icon" className="relative">
               <Bell className="w-[18px] h-[18px]" />
               {unreadCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-gradient-to-b from-[#34d399] to-[#0e9f6e] text-background text-[10px] font-bold rounded-full flex items-center justify-center shadow-[0_2px_8px_-2px_rgba(22,163,74,0.8)]">
+                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-gradient-to-b from-[#5b7ad4] to-[#253a8c] text-background text-[10px] font-bold rounded-full flex items-center justify-center shadow-[0_2px_8px_-2px_rgba(37,58,140,0.8)]">
                   {unreadCount}
                 </span>
               )}

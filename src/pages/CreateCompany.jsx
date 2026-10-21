@@ -261,10 +261,10 @@ export default function CreateCompany() {
 
           <Dialog open={showLimitModal} onOpenChange={setShowLimitModal}>
             <DialogContent className="max-w-md gap-0 overflow-hidden p-0">
-              <div className="relative overflow-hidden bg-[#04140d] px-6 py-8 text-center">
-                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(34,197,94,0.15),transparent_55%)]" />
-                <div className="relative mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#34d399] via-[#10b981] to-[#047857] shadow-[0_10px_30px_-8px_rgba(22,163,74,0.8)]">
-                  <Building2 className="h-6 w-6 text-black" />
+              <div className="relative overflow-hidden bg-[#0d1530] px-6 py-8 text-center">
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(58,86,194,0.15),transparent_55%)]" />
+                <div className="relative mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#5b7ad4] via-[#3a56c2] to-[#1e2d63] shadow-[0_10px_30px_-8px_rgba(37,58,140,0.8)]">
+                  <Building2 className="h-6 w-6 text-white" />
                 </div>
                 <h2 className="relative text-xl font-semibold text-white">
                   One company per account

@@ -193,7 +193,7 @@ export default function PersonalNavbar(
                   className="
                   absolute bottom-0 right-0
                   h-3 w-3
-                  bg-green-500
+                  bg-navy-500
                   rounded-full
                   border-2 border-white
                 "
@@ -253,8 +253,8 @@ export default function PersonalNavbar(
                       inline-block
                       mt-2 px-3 py-1
                       rounded-full
-                      bg-green-100
-                      text-green-700
+                      bg-navy-100
+                      text-navy-700
                       text-xs
                     "
                     >

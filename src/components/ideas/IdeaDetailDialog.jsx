@@ -10,7 +10,7 @@ import { formatDistanceToNow } from 'date-fns';
 
 const STATUSES = ['new', 'in_progress', 'on_hold', 'done', 'cancelled'];
 const STATUS_LABEL = { new: 'New', in_progress: 'In Progress', on_hold: 'On Hold', done: 'Done', cancelled: 'Cancelled' };
-const STATUS_DOT = { new: 'bg-yellow-400', in_progress: 'bg-blue-500', on_hold: 'bg-orange-400', done: 'bg-green-500', cancelled: 'bg-gray-400' };
+const STATUS_DOT = { new: 'bg-yellow-400', in_progress: 'bg-blue-500', on_hold: 'bg-orange-400', done: 'bg-navy-700', cancelled: 'bg-gray-400' };
 const PRIORITY_COLOR = { low: 'text-gray-500', medium: 'text-yellow-600', high: 'text-red-500' };
 const PRIORITY_ICON = { low: '▼', medium: '▶', high: '▲' };
 
@@ -90,7 +90,7 @@ export default function IdeaDetailDialog({ idea, currentUser, onClose, onStatusC
                 className="mt-1 shrink-0"
               >
                 {isDone
-                  ? <CheckCircle2 className="w-6 h-6 text-green-500" />
+                  ? <CheckCircle2 className="w-6 h-6 text-navy-500" />
                   : <Circle className="w-6 h-6 text-muted-foreground" />}
               </button>
               <h1 className="text-2xl font-bold leading-tight flex-1">{idea.title}</h1>
@@ -178,7 +178,7 @@ export default function IdeaDetailDialog({ idea, currentUser, onClose, onStatusC
                   <div key={s.id} className="flex items-center gap-3">
                     <button onClick={() => toggleSubtask(s.id)}>
                       {s.done
-                        ? <CheckCircle2 className="w-4 h-4 text-green-500" />
+                        ? <CheckCircle2 className="w-4 h-4 text-navy-500" />
                         : <Circle className="w-4 h-4 text-muted-foreground" />}
                     </button>
                     <span className={`text-sm ${s.done ? 'line-through text-muted-foreground' : ''}`}>{s.text}</span>

@@ -3,14 +3,14 @@ import { Trash2, X } from 'lucide-react';
 import { api } from '@/api/apiClient';
 
 const COLOR_MAP = {
-  yellow: 'bg-yellow-400', blue: 'bg-blue-400', green: 'bg-green-400',
+  yellow: 'bg-yellow-400', blue: 'bg-blue-400', green: 'bg-navy-700',
   pink: 'bg-pink-400', purple: 'bg-purple-400', white: 'bg-gray-400',
 };
 
 const COVER_COLORS = [
   'from-orange-200 to-pink-200',
   'from-blue-200 to-cyan-200',
-  'from-green-200 to-teal-200',
+  'from-navy-200 to-sky-200',
   'from-purple-200 to-pink-200',
   'from-yellow-200 to-orange-200',
   'from-slate-200 to-gray-300',

@@ -7,13 +7,13 @@ import NoteEditor from '@/components/notepad/NoteEditor';
 import DeleteConfirmModal from '@/components/notepad/DeleteConfirmModal';
 
 const COLOR_DOT = {
-  yellow: 'bg-yellow-400', blue: 'bg-blue-400', green: 'bg-green-400',
+  yellow: 'bg-yellow-400', blue: 'bg-blue-400', green: 'bg-navy-700',
   pink: 'bg-pink-400', purple: 'bg-purple-400', white: 'bg-gray-300',
 };
 
 const COVER_GRADIENTS = [
   'from-orange-100 to-pink-100', 'from-blue-100 to-cyan-100',
-  'from-green-100 to-teal-100', 'from-purple-100 to-pink-100',
+  'from-navy-100 to-sky-100', 'from-purple-100 to-pink-100',
   'from-yellow-100 to-orange-100', 'from-slate-100 to-gray-200',
 ];
 
@@ -122,7 +122,7 @@ export default function NotesSection({ currentUser }) {
 
         <button
           onClick={createNew}
-          className="inline-flex items-center gap-2 rounded-2xl bg-[#06180f] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#0b2417] transition-colors"
+          className="inline-flex items-center gap-2 rounded-2xl bg-[#101a38] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#17234f] transition-colors"
         >
           <Plus className="w-4 h-4" /> New note
         </button>
@@ -147,7 +147,7 @@ export default function NotesSection({ currentUser }) {
               <p className="mt-2 text-sm text-slate-500">Start a new note to capture your ideas and tasks.</p>
               <button
                 onClick={createNew}
-                className="mt-5 inline-flex items-center justify-center rounded-2xl bg-[#06180f] px-5 py-2 text-sm font-semibold text-white hover:bg-[#0b2417] transition-colors"
+                className="mt-5 inline-flex items-center justify-center rounded-2xl bg-[#101a38] px-5 py-2 text-sm font-semibold text-white hover:bg-[#17234f] transition-colors"
               >
                 + New note
               </button>
@@ -196,7 +196,7 @@ export default function NotesSection({ currentUser }) {
                 {saving && <span className="text-xs text-slate-500">Saving...</span>}
                 <button
                   onClick={handleBlurSave}
-                  className="rounded-2xl bg-[#06180f] px-4 py-2 text-sm font-semibold text-white hover:bg-[#0b2417] transition-colors"
+                  className="rounded-2xl bg-[#101a38] px-4 py-2 text-sm font-semibold text-white hover:bg-[#17234f] transition-colors"
                 >
                   Save
                 </button>

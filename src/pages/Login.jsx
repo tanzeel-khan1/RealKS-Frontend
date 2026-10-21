@@ -124,33 +124,33 @@ export default function Login() {
   };
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(16,185,129,0.16),transparent_50%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(58,86,194,0.16),transparent_50%)]" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(20,20,35,0.08),transparent_50%)]" />
 
-      <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-[#10b981]/20 blur-3xl" />
-      <div className="absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-[#022016]/40 blur-3xl" />
+      <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-[#3a56c2]/20 blur-3xl" />
+      <div className="absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-[#1e2d63]/40 blur-3xl" />
 
       <div className="relative min-h-screen flex items-center justify-center px-4 py-8 sm:px-6 lg:px-8">
-        <div className="w-full max-w-5xl grid overflow-hidden rounded-3xl border border-border/80 bg-card/80 shadow-[0_20px_80px_-20px_rgba(20,20,35,0.35)] backdrop-blur-xl lg:grid-cols-2">
-          <div className="relative hidden lg:flex flex-col justify-between overflow-hidden bg-[#04140d] p-10 text-white">
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(16,185,129,0.25),transparent_55%)]" />
-            <div className="pointer-events-none absolute -bottom-20 -right-16 h-64 w-64 rounded-full border-[26px] border-[#10b981]/10" />
-            <div className="pointer-events-none absolute top-1/3 right-8 h-24 w-24 rounded-full bg-[#10b981]/10 blur-2xl" />
+        <div className="w-full max-w-5xl grid overflow-hidden rounded-3xl border border-border/60 bg-card/80 shadow-[0_1px_1px_rgba(15,23,42,0.02),0_16px_60px_-20px_rgba(15,23,42,0.25)] backdrop-blur-xl lg:grid-cols-2 relative">
+          <div className="relative hidden lg:flex flex-col justify-between overflow-hidden p-10 text-white panel-hero">
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(58,86,194,0.25),transparent_55%)]" />
+            <div className="pointer-events-none absolute -bottom-20 -right-16 h-64 w-64 rounded-full border-[26px] border-[#3a56c2]/10" />
+            <div className="pointer-events-none absolute top-1/3 right-8 h-24 w-24 rounded-full bg-[#3a56c2]/10 blur-2xl" />
 
             <div className="relative">
               <div className="mb-12 flex items-center gap-3">
-                <div className="relative flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-[#34d399] via-[#10b981] to-[#047857] shadow-[0_8px_24px_-6px_rgba(16,185,129,0.8)]">
-                  <span className="text-sm font-black text-black">R</span>
+                <div className="relative flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-[#5b7ad4] via-[#3a56c2] to-[#1e2d63] shadow-[0_6px_16px_-10px_rgba(37,58,140,0.8)]">
+                  <span className="relative text-sm font-black text-white">R</span>
                 </div>
                 <div className="flex flex-col leading-none">
                   <span className="text-2xl font-bold tracking-tight">Ranvola</span>
-                  <span className="text-[9px] mt-1 uppercase tracking-[0.3em] text-[#10b981]/80">Realtor Suite</span>
+                  <span className="text-[9px] mt-1 uppercase tracking-[0.3em] text-[#3a56c2]/80">Realtor Suite</span>
                 </div>
               </div>
 
               <div className="space-y-5">
                 <h2 className="max-w-md font-display text-5xl font-normal leading-[1.05] tracking-tight">
-                  Run your business with <em className="text-[#34d399]">confidence</em>.
+                  Run your business with <em className="text-[#5b7ad4]">confidence</em>.
                 </h2>
                 <p className="max-w-md text-sm leading-6 text-white/60">
                   The workspace built for realtors and brokers — clients, properties, deals and operations in one refined place.
@@ -164,13 +164,13 @@ export default function Login() {
                 "Invoices, expenses and profit tracking",
                 "Documents, teams and every workflow",
               ].map((f) => (
-                <div key={f} className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 backdrop-blur">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#10b981] shadow-[0_0_8px_rgba(16,185,129,0.9)]" />
-                  <p className="text-xs text-white/80">{f}</p>
+                <div key={f} className="relative flex items-center gap-3 rounded-xl border border-white/12 bg-white/[0.04] px-4 py-3 backdrop-blur-sm">
+                  <span className="relative h-1.5 w-1.5 rounded-full bg-[#3a56c2] shadow-[0_0_6px_rgba(58,86,194,0.8)]" />
+                  <p className="relative text-xs text-white/85">{f}</p>
                 </div>
               ))}
-              <div className="rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/10 p-5 backdrop-blur mt-2">
-                <p className="font-display text-lg italic leading-relaxed text-white/80">
+              <div className="relative rounded-2xl bg-white/[0.04] border border-white/10 p-5 backdrop-blur-sm mt-2">
+                <p className="relative font-display text-lg italic leading-relaxed text-white/90">
                   "One workspace. Every workflow. Nothing slips through."
                 </p>
               </div>
@@ -181,9 +181,9 @@ export default function Login() {
             <div className="w-full max-w-md">
               <div className="mb-8 flex items-center justify-between lg:hidden">
                 <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#34d399] via-[#10b981] to-[#047857] shadow-[0_6px_18px_-6px_rgba(16,185,129,0.8)]">
-                    <span className="text-xs font-black text-black">R</span>
-                  </div>
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#5b7ad4] via-[#3a56c2] to-[#1e2d63] shadow-[0_4px_12px_-8px_rgba(37,58,140,0.8)]">
+                <span className="relative text-xs font-black text-white">R</span>
+              </div>
                   <span className="text-xl font-bold">Ranvola</span>
                 </div>
               </div>

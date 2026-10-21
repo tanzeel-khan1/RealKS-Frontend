@@ -77,8 +77,7 @@ export default function AppLayout() {
 
   return (
     <div className="min-h-screen bg-background relative">
-      <div className="pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(ellipse_at_top_right,rgba(16,185,129,0.12),transparent_50%)]" />
-      <div className="pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(5,150,105,0.08),transparent_55%)]" />
+      <div className="pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(120% 80% at 10% -10%,hsl(var(--primary)/0.06),transparent_55%),radial-gradient(100% 80% at 100% 0%,hsl(218_30%_70%/0.04),transparent_55%)]" />
       {/* Mobile backdrop */}
       <AnimatePresence>
         {mobileOpen && (
@@ -98,7 +97,7 @@ export default function AppLayout() {
           transform: isDesktop ? 'translateX(0)' : mobileOpen ? 'translateX(0)' : 'translateX(-100%)',
           visibility: (!isDesktop && !mobileOpen) ? 'hidden' : 'visible',
         }}
-        className="fixed top-0 left-0 h-full z-40 transition-transform duration-200 shadow-[8px_0_30px_-10px_rgba(0,0,0,0.35)]"
+        className="fixed top-0 left-0 h-full z-40 transition-transform duration-200 shadow-[0_1px_0_0_hsl(0_0%_100%/_0.06)_inset,10px_0_36px_-12px_rgba(0,0,0,0.4)] backdrop-blur-2xl"
       >
         <Sidebar
           companies={companies}

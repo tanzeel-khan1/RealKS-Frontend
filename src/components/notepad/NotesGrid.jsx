@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 const COLOR_MAP = {
   yellow:  { bg: 'bg-yellow-50 border-yellow-200',  dot: 'bg-yellow-400' },
   blue:    { bg: 'bg-blue-50 border-blue-200',      dot: 'bg-blue-400' },
-  green:   { bg: 'bg-green-50 border-green-200',    dot: 'bg-green-400' },
+  green:   { bg: 'bg-navy-50 border-navy-200',    dot: 'bg-navy-700' },
   pink:    { bg: 'bg-pink-50 border-pink-200',      dot: 'bg-pink-400' },
   purple:  { bg: 'bg-purple-50 border-purple-200',  dot: 'bg-purple-400' },
   white:   { bg: 'bg-card border-border',            dot: 'bg-muted-foreground' },
