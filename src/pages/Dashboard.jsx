@@ -3,11 +3,13 @@ import { useOutletContext, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/api/apiClient";
 import {
-  ArrowUpRight,
-  ArrowDownRight,
   ChevronRight,
   TrendingUp,
   Download,
+  CircleDollarSign,
+  Receipt,
+  Clock3,
+  FileText,
 } from "lucide-react";
 import TableSkeleton from "@/components/ui/TableSkeleton";
 import { Button } from "@/components/ui/button";
@@ -70,7 +72,7 @@ const CustomLineTooltip = ({ active, payload, label, currency }) => {
 };
 
 export default function Dashboard() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { activeCompany } = useOutletContext();
   const navigate = useNavigate();
   const companyId = activeCompany?.id;
@@ -98,26 +100,40 @@ export default function Dashboard() {
     .reduce((s, i) => s + (i.total_amount || i.amount || 0), 0);
   const netProfit = totalRevenue - totalExpenses;
   const paidInvoices = invoices.filter((i) => i.status === "paid");
-  const totalPaid = paidInvoices.reduce(
-    (s, i) => s + (i.total_amount || i.amount || 0),
+  const outstandingInvoices = invoices.filter(
+    (invoice) => !["paid", "draft", "archived"].includes(invoice.status),
+  );
+  const outstandingTotal = outstandingInvoices.reduce(
+    (sum, invoice) => sum + (invoice.total_amount || invoice.amount || 0),
     0,
   );
 
-  // Build monthly chart data from real invoices & expenses
-  const monthlyData = MONTHS.map((month, idx) => {
+  const now = new Date();
+  const firstMonth = new Date(now.getFullYear(), now.getMonth() - 11, 1);
+  const monthlyData = Array.from({ length: 12 }, (_, index) => {
+    const date = new Date(firstMonth.getFullYear(), firstMonth.getMonth() + index, 1);
+    const month = date.toLocaleString(language === "ar" ? "ar" : "en", {
+      month: "short",
+    });
+    const monthKey = `${date.getFullYear()}-${date.getMonth()}`;
     const rev = invoices
       .filter(
-        (i) =>
-          i.status === "paid" &&
-          i.due_date &&
-          new Date(i.due_date).getMonth() === idx,
+        (invoice) =>
+          invoice.status === "paid" &&
+          invoice.due_date &&
+          `${new Date(invoice.due_date).getFullYear()}-${new Date(invoice.due_date).getMonth()}` === monthKey,
       )
-      .reduce((s, i) => s + (i.total_amount || i.amount || 0), 0);
+      .reduce((sum, invoice) => sum + (invoice.total_amount || invoice.amount || 0), 0);
     const exp = expenses
-      .filter((e) => e.date && new Date(e.date).getMonth() === idx)
-      .reduce((s, e) => s + (e.amount || 0), 0);
-    return { month, revenue: rev, expenses: exp };
+      .filter((expense) => {
+        if (!expense.date) return false;
+        const expenseDate = new Date(expense.date);
+        return `${expenseDate.getFullYear()}-${expenseDate.getMonth()}` === monthKey;
+      })
+      .reduce((sum, expense) => sum + (expense.amount || 0), 0);
+    return { month, revenue: rev, expenses: exp, profit: rev - exp };
   });
+  const currentMonthProfit = monthlyData[monthlyData.length - 1]?.profit || 0;
 
   const today = new Date().toLocaleDateString("en-US", {
     day: "2-digit",
@@ -267,150 +283,142 @@ export default function Dashboard() {
 
   const metricCards = [
     {
-      label: "Monthly Revenue",
-      value: formatCurrency(totalRevenue / 12, currency, { maximumFractionDigits: 0 }),
-      change: 6.1,
-      positive: true,
+      label: t("dashboard.totalRevenue"),
+      value: formatCurrency(totalRevenue, currency),
+      detail: `${paidInvoices.length} ${t("dashboard.paidInvoices")}`,
+      icon: CircleDollarSign,
+      tone: "blue",
     },
     {
-      label: "Net Profit",
+      label: t("dashboard.totalExpenses"),
+      value: formatCurrency(totalExpenses, currency),
+      detail: `${expenses.length} ${t("dashboard.recordedExpenses")}`,
+      icon: Receipt,
+      tone: "amber",
+    },
+    {
+      label: t("dashboard.netProfit"),
       value: formatCurrency(netProfit, currency),
-      change: netProfit >= 0 ? 8.4 : -4.2,
-      positive: netProfit >= 0,
+      detail: t("dashboard.revenueMinusExpenses"),
+      icon: TrendingUp,
+      tone: netProfit >= 0 ? "green" : "red",
+    },
+    {
+      label: t("dashboard.outstanding"),
+      value: formatCurrency(outstandingTotal, currency),
+      detail: `${outstandingInvoices.length} ${t("dashboard.openInvoices")}`,
+      icon: Clock3,
+      tone: "violet",
     },
   ];
 
   return (
-    <div className="space-y-6 pb-8">
-      {/* Header */}
-      <div className="card-surface relative overflow-hidden px-6 py-5 sm:px-7 sm:py-6 surface-hover">
-        <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#3a56c2]/[0.06] blur-2xl" />
-        <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="eyebrow mb-2">t('dashboard.executiveOverview')</p>
-            <h1 className="font-display text-[28px] font-normal tracking-tight sm:text-[34px]">
-              {activeCompany
-                ? `${activeCompany.name} Dashboard`
-                : "Ranvola Dashboard"}
+    <div className="mx-auto max-w-[1600px] space-y-6 pb-8">
+      <section className="panel-hero relative overflow-hidden rounded-[28px] px-6 py-7 sm:px-8 sm:py-8">
+        <div className="pointer-events-none absolute -right-20 -top-36 h-80 w-80 rounded-full border border-white/[0.08]" />
+        <div className="pointer-events-none absolute -right-8 -top-24 h-56 w-56 rounded-full border border-white/[0.08]" />
+        <div className="pointer-events-none absolute bottom-0 right-0 h-56 w-56 bg-[radial-gradient(circle_at_center,rgba(91,122,212,0.24),transparent_68%)]" />
+        <div className="relative z-10 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <div className="max-w-2xl">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-3 py-1.5 text-[11px] font-medium tracking-wide text-white/70">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.7)]" />
+              {t("dashboard.executiveOverview")}
+            </div>
+            <h1 className="font-display text-3xl font-normal tracking-tight text-white sm:text-[42px]">
+              {activeCompany?.name || "Ranvola"}
             </h1>
-            <p className="mt-1 text-sm text-muted-foreground">
-              t('dashboard.clearView')
+            <p className="mt-2 max-w-xl text-sm leading-6 text-white/60">
+              {t("dashboard.clearView")}
             </p>
           </div>
-          <Button
-            onClick={downloadFinancialStatement}
-            disabled={downloading || !activeCompany}
-            size="lg"
-            className="h-10 px-4 text-xs"
-          >
-            <Download className="w-3.5 h-3.5" />
-            {downloading
-              ? "Generating..."
-              : `Download ${currentYear} Statement`}
-          </Button>
-        </div>
-      </div>
-
-      {/* Welcome + Metric Cards */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        {/* Welcome card */}
-        <div className="relative overflow-hidden rounded-2xl p-5 text-white panel-hero">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(58,86,194,0.12),transparent_55%)]" />
-          <div className="pointer-events-none absolute -bottom-14 -right-10 h-40 w-40 rounded-full border-[20px] border-[#3a56c2]/6" />
-          <div className="relative z-10">
-            <p className="text-xs text-white/55">Welcome back</p>
-            <h2 className="mt-1 truncate font-display text-xl">
-              {activeCompany?.name || "Your Company"}
-            </h2>
-            <p className="mt-1 text-xs text-white/55">
-              Best performer this month
+          <div className="flex flex-col items-start gap-3 sm:items-end">
+            <p className="text-xs font-medium uppercase tracking-[0.16em] text-white/45">
+              {new Date().toLocaleDateString(language === "ar" ? "ar" : "en", {
+                weekday: "long",
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+              })}
             </p>
-            <div className="mt-5">
-              <p className="text-3xl font-semibold tracking-tight">
-                {formatCurrency(totalExpenses, currency)}
-              </p>
-              <p className="mt-1 flex items-center gap-1 text-xs text-white/55">
-                <ArrowUpRight className="h-3 w-3 text-[#5b7ad4]" /> +12% from
-                last month
-              </p>
-            </div>
             <Button
-              size="sm"
-              variant="outline"
-              className="mt-5 w-full border-white/20 bg-white/10 text-xs text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.15)] hover:bg-white/15 hover:text-white"
-              onClick={() => navigate("/invoices")}
+              onClick={downloadFinancialStatement}
+              disabled={downloading || !activeCompany}
+              size="lg"
+              className="h-11 gap-2 rounded-xl border border-white/15 bg-white text-xs font-semibold text-slate-900 shadow-lg shadow-black/10 hover:bg-white/90"
             >
-              View Invoices
+              <Download className="h-4 w-4" />
+              {downloading
+                ? t("dashboard.generating")
+                : `${t("dashboard.downloadStatement")} ${currentYear}`}
             </Button>
           </div>
         </div>
+      </section>
 
-        {/* Metric cards */}
-        {metricCards.map((m, i) => (
-          <div
-            key={i}
-            className="card-surface flex min-h-[190px] flex-col justify-between p-5 surface-hover"
-          >
-            <div className="flex items-center justify-between">
-              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                {m.label}
+      <section aria-label={t("dashboard.financialSummary")} className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {metricCards.map((metric) => {
+          const Icon = metric.icon;
+          const toneClasses = {
+            blue: "bg-blue-500/10 text-blue-600 dark:text-blue-300 ring-blue-500/10",
+            amber: "bg-amber-500/10 text-amber-600 dark:text-amber-300 ring-amber-500/10",
+            green: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-300 ring-emerald-500/10",
+            red: "bg-rose-500/10 text-rose-600 dark:text-rose-300 ring-rose-500/10",
+            violet: "bg-violet-500/10 text-violet-600 dark:text-violet-300 ring-violet-500/10",
+          };
+          return (
+            <div
+              key={metric.label}
+              className="card-surface group relative overflow-hidden rounded-2xl p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-float)]"
+            >
+              <div className="mb-6 flex items-start justify-between gap-3">
+                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+                  {metric.label}
+                </p>
+                <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ring-1 ${toneClasses[metric.tone]}`}>
+                  <Icon className="h-[18px] w-[18px]" />
+                </span>
+              </div>
+              <p className="truncate text-[26px] font-semibold tracking-tight text-foreground sm:text-[30px]">
+                {metric.value}
               </p>
-              <span
-                className={`flex items-center gap-0.5 rounded-full px-2 py-1 text-xs font-semibold ${m.positive ? "bg-navy-500/10 text-navy-600 dark:text-navy-400" : "bg-red-500/10 text-red-600"}`}
-              >
-                {m.positive ? (
-                  <ArrowUpRight className="w-3 h-3" />
-                ) : (
-                  <ArrowDownRight className="w-3 h-3" />
-                )}
-                {m.positive ? "+" : ""}
-                {m.change}%
-              </span>
+              <p className="mt-2 truncate text-xs text-muted-foreground">
+                {metric.detail}
+              </p>
+              <div className="pointer-events-none absolute -bottom-10 -right-8 h-28 w-28 rounded-full bg-primary/[0.035] transition-transform duration-500 group-hover:scale-125" />
             </div>
-            <p className="text-3xl font-semibold tracking-tight">{m.value}</p>
-            <div className="h-1.5 w-full rounded-full bg-secondary overflow-hidden">
-              <div className="h-full w-3/4 rounded-full bg-gradient-to-r from-[#5b7ad4] to-[#3a56c2] opacity-70" />
-            </div>
-          </div>
-        ))}
-      </div>
+          );
+        })}
+      </section>
 
       {/* Charts Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
         {/* Bar Chart - Total Revenue */}
-        <div className="card-surface p-5 surface-hover">
-          <div className="mb-3 flex items-start justify-between">
+        <div className="card-surface rounded-2xl p-5 sm:p-6">
+          <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
-              <p className="eyebrow mb-1">Performance</p>
-              <h3 className="text-base font-semibold">Total Revenue</h3>
+              <p className="eyebrow mb-1">{t("dashboard.performance")}</p>
+              <h3 className="text-base font-semibold">{t("dashboard.revenueAndExpenses")}</h3>
               <p className="mt-1 text-xs text-muted-foreground">
-                Income in the last 12 months
+                {t("dashboard.last12Months")}
               </p>
             </div>
-            <div className="flex gap-5 text-right text-xs">
-              <div>
-                <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
-                  Revenue
-                </p>
-                <p className="mt-1 text-sm font-semibold">
-                  {formatCurrency(totalRevenue, currency)}
-                </p>
-              </div>
-              <div>
-                <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
-                  Expenses
-                </p>
-                <p className="mt-1 text-sm font-semibold">
-                  {formatCurrency(totalExpenses, currency)}
-                </p>
-              </div>
+            <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs">
+              <span className="inline-flex items-center gap-2 text-muted-foreground">
+                <span className="h-2 w-2 rounded-full bg-primary" />
+                {t("dashboard.revenue")}
+              </span>
+              <span className="inline-flex items-center gap-2 text-muted-foreground">
+                <span className="h-2 w-2 rounded-full bg-slate-300 dark:bg-slate-600" />
+                {t("dashboard.totalExpenses")}
+              </span>
             </div>
           </div>
-          <ResponsiveContainer width="100%" height={200}>
-            <BarChart data={monthlyData} barCategoryGap="30%" barGap={2}>
+          <ResponsiveContainer width="100%" height={240}>
+            <BarChart data={monthlyData} barCategoryGap="30%" barGap={3} margin={{ top: 8, right: 4, left: -22, bottom: 0 }}>
+              <CartesianGrid vertical={false} stroke="hsl(var(--border))" strokeDasharray="4 8" />
               <XAxis
                 dataKey="month"
-                tick={{ fontSize: 10 }}
+                tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }}
                 axisLine={false}
                 tickLine={false}
               />
@@ -418,46 +426,45 @@ export default function Dashboard() {
               <Tooltip
                 content={<CustomBarTooltip currency={currency} />}
                 cursor={{ fill: "hsl(var(--muted) / 0.4)" }}
-              />{" "}
+              />
               <Bar
                 dataKey="revenue"
-                name="Revenue"
-                fill="#3a56c2"
-                radius={[4, 4, 0, 0]}
+                name={t("dashboard.revenue")}
+                fill="hsl(var(--primary))"
+                radius={[5, 5, 0, 0]}
               />
               <Bar
                 dataKey="expenses"
-                name="Expenses"
-                fill="hsl(var(--muted-foreground) / 0.35)"
-                radius={[4, 4, 0, 0]}
+                name={t("dashboard.totalExpenses")}
+                fill="hsl(var(--muted-foreground) / 0.28)"
+                radius={[5, 5, 0, 0]}
               />
             </BarChart>
           </ResponsiveContainer>
         </div>
 
-        <div className="card-surface p-5 surface-hover">
-          <div className="mb-3 flex items-start justify-between">
+        <div className="card-surface rounded-2xl p-5 sm:p-6">
+          <div className="mb-5 flex items-start justify-between gap-4">
             <div>
-              <p className="eyebrow mb-1">Trend</p>
-              <h3 className="text-base font-semibold">Profit Trend</h3>
-              <div className="flex items-center gap-2 mt-2">
-                <p className="text-3xl font-semibold tracking-tight">
-                  {formatCurrency(totalPaid, currency)}
+              <p className="eyebrow mb-1">{t("dashboard.trend")}</p>
+              <h3 className="text-base font-semibold">{t("dashboard.monthlyProfit")}</h3>
+              <div className="mt-2 flex items-center gap-2">
+                <p className={`text-2xl font-semibold tracking-tight ${currentMonthProfit < 0 ? "text-destructive" : "text-foreground"}`}>
+                  {formatCurrency(currentMonthProfit, currency)}
                 </p>
-                <span className="text-xs text-navy-600 dark:text-navy-400 font-semibold flex items-center gap-0.5 bg-navy-500/10 rounded-full px-2 py-0.5">
-                  <ArrowUpRight className="w-3 h-3" /> +2.5%
-                </span>
               </div>
+              <p className="mt-1 text-xs text-muted-foreground">{t("dashboard.thisMonth")}</p>
             </div>
-            <Button size="sm" variant="outline" className="gap-1 text-xs">
-              <TrendingUp className="w-3.5 h-3.5" /> Export
-            </Button>
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-300">
+              <TrendingUp className="h-[18px] w-[18px]" />
+            </span>
           </div>
-          <ResponsiveContainer width="100%" height={200}>
-            <LineChart data={monthlyData}>
+          <ResponsiveContainer width="100%" height={240}>
+            <LineChart data={monthlyData} margin={{ top: 8, right: 8, left: -22, bottom: 0 }}>
+              <CartesianGrid vertical={false} stroke="hsl(var(--border))" strokeDasharray="4 8" />
               <XAxis
                 dataKey="month"
-                tick={{ fontSize: 10 }}
+                tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }}
                 axisLine={false}
                 tickLine={false}
               />
@@ -465,81 +472,74 @@ export default function Dashboard() {
               <Tooltip content={<CustomLineTooltip currency={currency} />} />
               <Line
                 type="monotone"
-                dataKey="revenue"
-                name="Revenue"
-                stroke="#3a56c2"
-                strokeWidth={2.5}
+                dataKey="profit"
+                name={t("dashboard.netProfit")}
+                stroke={currentMonthProfit < 0 ? "hsl(var(--destructive))" : "hsl(152, 58%, 42%)"}
+                strokeWidth={3}
                 dot={false}
-                activeDot={{ r: 4 }}
-              />
-              <Line
-                type="monotone"
-                dataKey="expenses"
-                name="Expenses"
-                stroke="hsl(var(--muted-foreground) / 0.4)"
-                strokeWidth={2}
-                dot={false}
+                activeDot={{ r: 5, strokeWidth: 0 }}
               />
             </LineChart>
           </ResponsiveContainer>
         </div>
       </div>
 
-      {/* t('dashboard.recentInvoices') */}
-      <div className="card-surface overflow-hidden p-5 surface-hover">
-        <div className="mb-4 flex items-center justify-between">
+      <div className="card-surface overflow-hidden rounded-2xl p-5 sm:p-6">
+        <div className="mb-5 flex items-center justify-between gap-4">
           <div>
-            <p className="eyebrow mb-1">Activity</p>
-            <h3 className="text-base font-semibold">
-              t('dashboard.recentInvoices')
-            </h3>
+            <p className="eyebrow mb-1">{t("dashboard.activity")}</p>
+            <h3 className="text-base font-semibold">{t("dashboard.recentInvoices")}</h3>
           </div>
           <button
             onClick={() => navigate("/invoices")}
-            className="text-xs text-muted-foreground flex items-center gap-1 hover:text-foreground transition-colors"
+            className="inline-flex items-center gap-1 rounded-lg px-2 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           >
-            View all <ChevronRight className="w-3 h-3" />
+            {t("dashboard.seeAll")} <ChevronRight className="h-3.5 w-3.5" />
           </button>
         </div>
         {isLoading ? (
           <TableSkeleton rows={4} cols={4} />
         ) : invoices.length === 0 ? (
-          <p className="text-sm text-muted-foreground text-center py-8">
-            No invoices yet
-          </p>
+          <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-border py-10 text-center">
+            <span className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-muted text-muted-foreground">
+              <FileText className="h-5 w-5" />
+            </span>
+            <p className="text-sm font-medium">{t("dashboard.noInvoices")}</p>
+            <p className="mt-1 text-xs text-muted-foreground">{t("dashboard.invoicesWillAppear")}</p>
+          </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="w-full min-w-[520px] text-sm">
               <thead>
-                <tr className="border-b border-border text-xs text-muted-foreground">
-                  <th className="text-left pb-2 font-medium">Title</th>
-                  <th className="text-left pb-2 font-medium hidden sm:table-cell">
-                    Recipient
+                <tr className="border-b border-border/70 text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
+                  <th className="pb-3 text-left font-semibold">{t("dashboard.invoice")}</th>
+                  <th className="hidden pb-3 text-left font-semibold sm:table-cell">
+                    {t("dashboard.recipient")}
                   </th>
-                  <th className="text-right pb-2 font-medium">Amount</th>
-                  <th className="text-right pb-2 font-medium">Status</th>
+                  <th className="pb-3 text-right font-semibold">{t("dashboard.amount")}</th>
+                  <th className="pb-3 text-right font-semibold">{t("dashboard.status")}</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border">
+              <tbody className="divide-y divide-border/60">
                 {invoices.slice(0, 5).map((inv) => (
                   <tr
                     key={inv.id}
-                    className="text-sm transition-colors hover:bg-muted/30"
+                    className="text-sm transition-colors hover:bg-muted/40"
                   >
-                    <td className="py-2.5 font-medium">{inv.title}</td>
-                    <td className="py-2.5 text-muted-foreground hidden sm:table-cell">
+                    <td className="py-3.5 font-medium">{inv.title}</td>
+                    <td className="hidden py-3.5 text-muted-foreground sm:table-cell">
                       {inv.recipient_name || "—"}
                     </td>
-                    <td className="py-2.5 text-right font-semibold">
+                    <td className="py-3.5 text-right font-semibold tabular-nums">
                       {formatCurrency(inv.total_amount || inv.amount || 0, inv.currency || currency)}
                     </td>
-                    <td className="py-2.5 text-right">
+                    <td className="py-3.5 text-right">
                       <span
-                        className={`text-xs px-2 py-0.5 rounded-full font-medium ${
+                        className={`inline-flex rounded-full px-2.5 py-1 text-[10px] font-semibold capitalize ${
                           inv.status === "paid"
-                            ? "bg-primary/10 text-primary"
+                            ? "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300"
                             : inv.status === "overdue"
-                              ? "bg-destructive/10 text-destructive"
+                              ? "bg-rose-500/10 text-rose-700 dark:text-rose-300"
                               : "bg-muted text-muted-foreground"
                         }`}
                       >
