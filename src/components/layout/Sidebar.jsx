@@ -62,10 +62,10 @@ export default function Sidebar({
     <Link key={item.path} to={item.path} title={isCollapsed ? item.label : undefined} onClick={onNavClick}>
       <div
         className={cn(
-          "relative flex items-center gap-3 px-3 py-2 rounded-lg text-[13px] font-medium transition-all duration-200",
+          "relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-[13px] font-medium transition-all duration-200",
           location.pathname === item.path
-            ? "bg-sidebar-primary/10 text-sidebar-foreground shadow-[inset_0_1px_0_0_hsl(0_0%_100%/_0.08),0_1px_2px_rgba(0,0,0,0.25)] backdrop-blur-sm"
-            : "text-sidebar-foreground/55 hover:bg-sidebar-accent hover:text-sidebar-foreground",
+            ? "border border-sidebar-primary/15 bg-sidebar-primary/10 text-sidebar-foreground shadow-sm backdrop-blur-sm"
+            : "border border-transparent text-sidebar-foreground/60 hover:bg-sidebar-accent/80 hover:text-sidebar-foreground",
           extra
         )}
       >
@@ -163,7 +163,7 @@ export default function Sidebar({
       {/* Navigation */}
       <div className="relative flex-1 overflow-y-auto px-2 py-3">
         {!isCollapsed && (
-          <p className="text-[10px] font-semibold text-sidebar-foreground/40 uppercase tracking-widest mb-2 px-2">
+          <p className="mb-2 px-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-sidebar-foreground/40">
             Menu
           </p>
         )}

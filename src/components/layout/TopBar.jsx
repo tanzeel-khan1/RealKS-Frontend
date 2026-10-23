@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Search, Bell, Command, Menu, Sun, Moon } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Search, Bell, Menu, Sun, Moon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -46,7 +46,7 @@ export default function TopBar({ sidebarWidth, showMenuButton, onOpenCommand, on
 
   return (
     <header
-      className="fixed top-0 right-0 left-0 lg:left-[var(--sidebar-w)] h-14 bg-background/75 backdrop-blur-xl border-b border-border/60 z-30 flex items-center gap-2 px-4 transition-all duration-200"
+      className="fixed top-0 right-0 left-0 z-30 flex h-14 items-center gap-2 border-b border-border/60 bg-background/85 px-4 shadow-[0_8px_30px_-24px_hsl(var(--foreground)/0.35)] backdrop-blur-2xl transition-all duration-200 lg:left-[var(--sidebar-w)]"
       style={{ '--sidebar-w': `${sidebarWidth}px` }}
     >
       {showMenuButton && (
@@ -61,7 +61,7 @@ export default function TopBar({ sidebarWidth, showMenuButton, onOpenCommand, on
 
       <button
         onClick={onOpenCommand}
-        className="flex items-center gap-2 px-3.5 py-2 rounded-xl border border-border/60 bg-card/80 backdrop-blur-xl hover:bg-card hover:border-foreground/15 text-muted-foreground text-sm transition-all shadow-[0_1px_1px_rgba(15,23,42,0.02)] flex-1 max-w-sm"
+        className="flex max-w-sm flex-1 items-center gap-2 rounded-xl border border-border/70 bg-card/75 px-3.5 py-2 text-sm text-muted-foreground shadow-sm backdrop-blur-xl transition-all hover:border-primary/25 hover:bg-card hover:text-foreground"
       >
         <Search className="w-4 h-4 shrink-0" />
         <span>{t('topbar.searchAnything')}</span>

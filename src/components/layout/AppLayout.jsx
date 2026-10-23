@@ -77,7 +77,7 @@ export default function AppLayout() {
 
   return (
     <div className="min-h-screen bg-background relative">
-      <div className="pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(120% 80% at 10% -10%,hsl(var(--primary)/0.06),transparent_55%),radial-gradient(100% 80% at 100% 0%,hsl(218_30%_70%/0.04),transparent_55%)]" />
+      <div className="pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(100%_65%_at_4%_0%,hsl(var(--primary)/0.07),transparent_58%),radial-gradient(80%_60%_at_100%_5%,hsl(218_45%_62%/0.055),transparent_55%),linear-gradient(180deg,hsl(var(--background)),hsl(var(--background))_72%,hsl(var(--primary)/0.018))]" />
       {/* Mobile backdrop */}
       <AnimatePresence>
         {mobileOpen && (
@@ -132,14 +132,14 @@ export default function AppLayout() {
 
       {/* Main content */}
       <main
-        className="relative z-10 pt-14 min-h-screen transition-all duration-200"
+        className="company-workspace relative z-10 pt-14 min-h-screen transition-all duration-200"
         style={{ marginLeft: mainMargin }}
       >
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className="p-4 lg:p-6"
+          className="p-4 sm:p-6 xl:p-8"
         >
           <Outlet context={{ activeCompany, setActiveCompany: handleSetActiveCompany, companies, currentUser }} />
         </motion.div>
