@@ -6,8 +6,6 @@ dist/
 build/
 
 # Environment variables
-.env
-.env.local
 .env.development.local
 .env.test.local
 .env.production.local
@@ -19,14 +17,9 @@ yarn-error.log*
 pnpm-debug.log*
 
 # Editor
-.vscode/
 .idea/
 
 # OS files
 .DS_Store
 Thumbs.db
-
-# Cache
-.cache/
-.parcel-cache/
-.eslintcache
+config.bat
